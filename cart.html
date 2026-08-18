@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>장바구니 — MYUNGJA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,450;0,9..144,600;1,9..144,450&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css" />
+<style>
+  :root{
+    --ivory:#F5F0E6; --ivory-deep:#EDE5D4; --brown-deep:#3B2C21; --brown:#6E5644;
+    --brown-soft:#A78E77; --orange:#D9722E; --orange-soft:#EFC9A6; --ink:#2A2118;
+    --line: rgba(59,44,33,0.14); --radius:2px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{ background:var(--ivory); color:var(--ink); font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif; -webkit-font-smoothing:antialiased; }
+  .serif{ font-family:'Fraunces', serif; }
+  a{ color:inherit; text-decoration:none; }
+  button{ font-family:inherit; cursor:pointer; border:none; background:none; }
+  .container{ max-width:1080px; margin:0 auto; padding:0 32px; }
+
+  header{ position:sticky; top:0; z-index:50; background:rgba(245,240,230,0.92); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); }
+  .header-inner{ display:flex; align-items:center; justify-content:space-between; padding:22px 32px; max-width:1240px; margin:0 auto; }
+  .logo{ font-family:'Fraunces', serif; font-weight:600; font-size:26px; color:var(--brown-deep); }
+  nav.main-nav{ display:flex; gap:34px; }
+  nav.main-nav a{ font-size:13.5px; letter-spacing:0.06em; color:var(--brown-deep); }
+  nav.main-nav a:hover{ color:var(--orange); }
+  .header-icons{ display:flex; gap:20px; align-items:center; font-size:12px; color:var(--brown); }
+
+  .page-head{ padding:52px 0 8px; text-align:center; }
+  .page-head span{ font-size:12px; letter-spacing:0.28em; color:var(--orange); text-transform:uppercase; display:block; margin-bottom:12px; }
+  .page-head h1{ font-family:'Fraunces', serif; font-weight:450; font-size:34px; color:var(--brown-deep); }
+
+  .steps{ display:flex; justify-content:center; gap:14px; margin:30px 0 60px; font-size:12px; letter-spacing:0.04em; color:var(--brown-soft); }
+  .steps .on{ color:var(--brown-deep); font-weight:600; }
+  .steps .sep{ color:var(--line); }
+
+  .cart-layout{ display:grid; grid-template-columns:1fr 340px; gap:60px; padding-bottom:120px; align-items:start; }
+
+  .cart-list-head{ display:flex; justify-content:space-between; align-items:center; padding-bottom:18px; border-bottom:1px solid var(--brown-deep); margin-bottom:6px; }
+  .cart-list-head label{ display:flex; align-items:center; gap:10px; font-size:13px; color:var(--brown-deep); }
+  .cart-list-head .del-selected{ font-size:12px; color:var(--brown-soft); text-decoration:underline; }
+
+  .cart-item{ display:flex; gap:20px; padding:28px 0; border-bottom:1px solid var(--line); }
+  .cart-item .checkbox{ padding-top:6px; }
+  .cart-thumb{ width:110px; height:132px; border-radius:var(--radius); flex-shrink:0; }
+  .ci1{ background:linear-gradient(150deg,#EDE0C9,#C9A87E); }
+  .ci2{ background:linear-gradient(150deg,#D9722E,#B8531A); }
+
+  .cart-item-body{ flex:1; display:flex; flex-direction:column; }
+  .ci-name{ font-size:14.5px; color:var(--ink); margin-bottom:6px; }
+  .ci-opt{ font-size:12.5px; color:var(--brown-soft); margin-bottom:auto; }
+  .ci-bottom{ display:flex; justify-content:space-between; align-items:flex-end; margin-top:16px; }
+
+  .qty-control{ display:flex; align-items:center; gap:16px; border:1px solid var(--line); border-radius:100px; padding:6px 14px; width:fit-content; }
+  .qty-control button{ font-size:13px; color:var(--brown-deep); width:16px; }
+  .qty-control span{ font-size:13px; min-width:14px; text-align:center; }
+
+  .ci-price{ font-family:'Fraunces', serif; font-size:16px; color:var(--brown-deep); text-align:right; }
+  .ci-price .unit{ display:block; font-size:11px; font-family:'Pretendard Variable'; color:var(--brown-soft); margin-top:3px; }
+
+  .remove-btn{ font-size:11.5px; color:var(--brown-soft); text-decoration:underline; align-self:flex-start; margin-left:auto; margin-bottom:4px; }
+
+  .empty-cart{ text-align:center; padding:100px 0; }
+  .empty-cart .icon{ font-size:40px; margin-bottom:20px; opacity:.4; }
+  .empty-cart p{ font-size:14px; color:var(--brown-soft); margin-bottom:28px; }
+  .empty-cart a{ display:inline-block; background:var(--brown-deep); color:var(--ivory); padding:15px 32px; border-radius:100px; font-size:13px; letter-spacing:0.06em; }
+
+  /* summary */
+  .summary-card{ position:sticky; top:110px; background:var(--ivory-deep); border-radius:var(--radius); padding:34px 28px; }
+  .summary-card h3{ font-family:'Fraunces', serif; font-size:18px; color:var(--brown-deep); margin-bottom:26px; }
+  .sum-row{ display:flex; justify-content:space-between; font-size:13.5px; color:var(--brown); margin-bottom:16px; }
+  .sum-row.discount{ color:var(--orange); }
+  .sum-div{ border-top:1px solid var(--line); margin:20px 0; }
+  .sum-total{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:28px; }
+  .sum-total span:first-child{ font-size:14px; color:var(--brown-deep); }
+  .sum-total span:last-child{ font-family:'Fraunces', serif; font-size:24px; color:var(--brown-deep); }
+
+  .btn-checkout{ display:block; width:100%; text-align:center; background:var(--orange); color:var(--ivory); padding:18px; border-radius:100px; font-size:14px; letter-spacing:0.06em; margin-bottom:12px; transition:background .25s ease; }
+  .btn-checkout:hover{ background:var(--brown-deep); }
+  .btn-continue{ display:block; width:100%; text-align:center; padding:14px; font-size:12.5px; color:var(--brown); letter-spacing:0.04em; }
+
+  .free-ship-note{ font-size:11.5px; color:var(--brown-soft); text-align:center; margin-top:18px; line-height:1.6; }
+  .free-ship-note b{ color:var(--orange); }
+  .progress-track{ height:4px; background:var(--line); border-radius:100px; margin-top:10px; overflow:hidden; }
+  .progress-fill{ height:100%; background:var(--orange); border-radius:100px; }
+
+  .recommend-section{ padding:0 0 100px; }
+  .section-head{ margin-bottom:30px; text-align:center; }
+  .section-head span{ font-size:12px; letter-spacing:0.28em; color:var(--orange); text-transform:uppercase; display:block; margin-bottom:10px; }
+  .section-head h2{ font-family:'Fraunces', serif; font-weight:450; font-size:24px; color:var(--brown-deep); }
+  .rec-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+  .rec-thumb{ aspect-ratio:4/5; border-radius:var(--radius); margin-bottom:12px; }
+  .rec-name{ font-size:12.5px; color:var(--ink); margin-bottom:4px; }
+  .rec-price{ font-size:13px; color:var(--brown-deep); font-family:'Fraunces', serif; }
+  .rc1{ background:linear-gradient(150deg,#EFC9A6,#A78E77); }
+  .rc2{ background:linear-gradient(150deg,#3B2C21,#8C6B52); }
+  .rc3{ background:linear-gradient(150deg,#EDE0C9,#D9722E); }
+  .rc4{ background:linear-gradient(150deg,#A78E77,#6E5644); }
+
+  footer{ background:var(--ivory-deep); border-top:1px solid var(--line); padding:40px 0; text-align:center; font-size:11.5px; color:var(--brown-soft); }
+
+  @media (max-width:900px){
+    .header-inner{ padding:16px 20px; } nav.main-nav{ display:none; }
+    .cart-layout{ grid-template-columns:1fr; }
+    .summary-card{ position:static; }
+    .rec-grid{ grid-template-columns:repeat(2,1fr); }
+    .container{ padding:0 20px; }
+  }
+</style>
+<style id="myungja-nav-fix">
+header,.header,.site-header,.main-header{position:relative;z-index:9998}
+.main-nav{position:relative!important;z-index:9999!important;pointer-events:auto!important}
+.main-nav a{position:relative!important;z-index:10000!important;pointer-events:auto!important;cursor:pointer!important}
+.main-nav a.is-active{color:#e6732a!important}
+.main-nav a.is-active:after{content:"";position:absolute;left:0;right:0;bottom:-8px;height:1px;background:#e6732a}
+</style><style id="real-cart-style">
+.cart-thumb{width:112px;height:142px;flex:0 0 112px;background:#ebe2d2}.cart-thumb img{width:100%;height:100%;object-fit:cover;display:block}.rec-card{display:block;color:inherit;text-decoration:none}.rec-card img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;background:#ebe2d2;margin-bottom:15px}.rec-card:hover .rec-name{color:#df7129}.empty-cart{padding:80px 20px;text-align:center}.cart-list-head label{font-size:13px}.ci-name a{color:inherit;text-decoration:none}.ci-name a:hover{color:#df7129}@media(max-width:680px){.cart-item{gap:12px}.cart-thumb{width:86px;height:110px;flex-basis:86px}}
+</style><link rel="stylesheet" href="myungja-unified.css"><link rel="stylesheet" href="search-overlay.css"></head>
+<body>
+
+  <header class="myungja-global-header"><div class="header-inner"><a href="index.html" class="logo">MYUNGJA</a><nav class="main-nav" aria-label="주요 메뉴"><a href="index.html#new">NEW</a><a href="top.html">TOP</a><a href="bottom.html">BOTTOM</a><a href="set.html">SET</a><a href="outer.html">OUTER</a><a href="index.html#md">MD PICK</a><a href="index.html#about">ABOUT</a></nav><div class="header-icons"><span>검색</span><span>MY</span><a href="cart.html" data-cart-count>bag(0)</a></div></div></header>
+
+  <div class="container">
+    <div class="page-head">
+      <span>Your Selection</span>
+      <h1 class="serif">장바구니</h1>
+    </div>
+
+    <div class="steps">
+      <span class="on">01 장바구니</span><span class="sep">—</span>
+      <span>02 주문서 작성</span><span class="sep">—</span>
+      <span>03 결제</span><span class="sep">—</span>
+      <span>04 주문 완료</span>
+    </div>
+
+    <div id="cartWrap">
+      <div class="cart-layout" id="cartLayout">
+        <div>
+          <div class="cart-list-head">
+            <label><input type="checkbox" checked> 전체선택 (2/2)</label>
+            <button class="del-selected">선택삭제</button>
+          </div>
+          <div id="cartItems"></div>
+        </div>
+
+        <div class="summary-card">
+          <h3 class="serif">주문 요약</h3>
+          <div class="sum-row"><span>상품금액</span><span id="sumSubtotal">140,000원</span></div>
+          <div class="sum-row discount"><span>회원 할인</span><span id="sumDiscount">−7,000원</span></div>
+          <div class="sum-row"><span>배송비</span><span id="sumShipping">무료</span></div>
+          <div class="sum-div"></div>
+          <div class="sum-total"><span>총 결제금액</span><span id="sumTotal" class="serif">133,000원</span></div>
+          <a href="checkout.html" class="btn-checkout">주문하기</a>
+          <a href="index.html" class="btn-continue">쇼핑 계속하기</a>
+          <div class="free-ship-note">
+            5만원 이상 주문 시 무료배송 · 현재 <b>무료배송 조건 충족</b>
+            <div class="progress-track"><div class="progress-fill" style="width:100%;"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="empty-cart" id="emptyState" style="display:none;">
+      <div class="icon">🛍</div>
+      <p>장바구니가 비어 있어요.<br>마음에 드는 아이템을 담아보세요.</p>
+      <a href="index.html">쇼핑 계속하기</a>
+    </div>
+  </div>
+
+  <section class="recommend-section">
+  <div class="container">
+    <div class="section-head"><span>You May Also Like</span><h2 class="serif">함께 담으면 좋은 상품</h2></div>
+    <div class="rec-grid">
+      <a class="rec-card" href="product-bra.html"><img src="img/signature-airfit-bra.png" alt="시그니처 에어핏 브라탑"><div class="rec-name">시그니처 에어핏 브라탑</div><div class="rec-price">62,000원</div></a>
+      <a class="rec-card" href="product-leggings.html"><img src="img/bottom/leggings-brown-1.png" alt="소프트 저지 레깅스"><div class="rec-name">소프트 저지 레깅스</div><div class="rec-price">68,000원</div></a>
+      <a class="rec-card" href="product-warming.html"><img src="img/colors/warming-beige-1.png" alt="워밍 롱 카디건"><div class="rec-name">워밍 롱 카디건</div><div class="rec-price">98,000원</div></a>
+      <a class="rec-card" href="product-daily.html"><img src="img/colors/daily-white-1.png" alt="데일리 라운드 반팔티"><div class="rec-name">데일리 라운드 반팔티</div><div class="rec-price">48,000원</div></a>
+    </div>
+  </div>
+</section>
+
+  <footer>© MYUNGJA. All rights reserved.</footer>
+
+<script>
+  function fmt(n){ return n.toLocaleString('ko-KR') + '원'; }
+
+  function recalc(){
+    const items = document.querySelectorAll('.cart-item');
+    let subtotal = 0;
+    items.forEach(item=>{
+      const price = parseInt(item.dataset.price);
+      const qty = parseInt(item.dataset.qty);
+      subtotal += price * qty;
+    });
+    const discount = Math.round(subtotal * 0.05);
+    const shippingFee = (subtotal - discount) >= 50000 ? 0 : 3000;
+    const total = subtotal - discount + shippingFee;
+
+    document.getElementById('sumSubtotal').textContent = fmt(subtotal);
+    document.getElementById('sumDiscount').textContent = '−' + fmt(discount).replace('원','') + '원';
+    document.getElementById('sumShipping').textContent = shippingFee === 0 ? '무료' : fmt(shippingFee);
+    document.getElementById('sumTotal').textContent = fmt(total);
+
+    const fill = document.querySelector('.progress-fill');
+    const note = document.querySelector('.free-ship-note b');
+    const ratio = Math.min(100, Math.round(((subtotal-discount)/50000)*100));
+    fill.style.width = ratio + '%';
+    if(shippingFee === 0){ note.textContent = '무료배송 조건 충족'; }
+    else{ note.textContent = fmt(50000-(subtotal-discount)) + ' 더 담으면 무료배송'; }
+
+    if(items.length === 0){
+      document.getElementById('cartLayout').style.display = 'none';
+      document.getElementById('emptyState').style.display = 'block';
+    }
+  }
+
+  function changeQty(btn, delta){
+    const item = btn.closest('.cart-item');
+    let qty = parseInt(item.dataset.qty) + delta;
+    if(qty < 1) qty = 1;
+    item.dataset.qty = qty;
+    item.querySelector('.qtyNum').textContent = qty;
+    const price = parseInt(item.dataset.price);
+    item.querySelector('.ci-price').innerHTML = fmt(price*qty) + '<span class="unit">' + fmt(price) + ' × ' + qty + '</span>';
+    recalc();
+  }
+
+  function removeItem(btn){
+    btn.closest('.cart-item').remove();
+    recalc();
+  }
+
+  recalc();
+</script>
+<style>.inquiry-fab{position:fixed;right:20px;bottom:78px;z-index:10000;border:0;border-radius:999px;background:#d96f28;color:#fff;padding:14px 19px;font-size:12px;font-weight:700;box-shadow:0 9px 28px rgba(55,35,20,.24);cursor:pointer}.inquiry-modal{position:fixed;inset:0;z-index:10001;background:rgba(36,27,21,.48);display:none;align-items:center;justify-content:center;padding:20px}.inquiry-modal.open{display:flex}.inquiry-box{width:min(480px,100%);background:#f5f0e6;padding:34px;position:relative;color:#3b2c21;box-shadow:0 22px 70px rgba(0,0,0,.28)}.inquiry-close{position:absolute;right:18px;top:16px;border:0;background:none;font-size:20px;cursor:pointer}.inquiry-box small{color:#d96f28;letter-spacing:.2em}.inquiry-box h2{font-family:Georgia,'Noto Sans KR',serif;font-weight:400;font-size:29px;margin:10px 0}.inquiry-box>p{font-size:13px;line-height:1.7;color:#765a44;margin-bottom:22px}.inquiry-form{display:grid;gap:12px}.inquiry-form input,.inquiry-form select,.inquiry-form textarea{width:100%;border:1px solid #d7cbb9;background:#fffdf8;padding:12px;font:inherit;font-size:13px;color:#3b2c21}.inquiry-form textarea{min-height:120px;resize:vertical}.inquiry-submit{border:0;background:#3b2c21;color:#fff;padding:14px;cursor:pointer}.inquiry-success{display:none;text-align:center;padding:28px 0}.inquiry-success.show{display:block}.inquiry-success.show+.inquiry-form{display:none}@media(max-width:760px){.inquiry-fab{right:12px;bottom:66px}.inquiry-box{padding:28px 22px}}</style><button class="inquiry-fab" type="button" onclick="openInquiry()">1:1 문의</button><div class="inquiry-modal" id="inquiryModal" onclick="if(event.target===this)closeInquiry()"><div class="inquiry-box"><button class="inquiry-close" type="button" onclick="closeInquiry()">×</button><small>MYUNGJA CARE</small><h2>1:1 문의하기</h2><p>제품, 사이즈, 배송에 대해 궁금한 점을 남겨주세요. 확인 후 안내드리겠습니다.</p><div class="inquiry-success" id="inquirySuccess"><b>문의가 등록되었습니다.</b><p>남겨주신 내용은 순서대로 확인하겠습니다.</p></div><form class="inquiry-form" onsubmit="submitInquiry(event)"><input required placeholder="이름"><input required placeholder="연락처 또는 이메일"><select required><option value="">문의 유형 선택</option><option>제품 및 소재</option><option>사이즈 추천</option><option>주문 및 배송</option><option>교환 및 반품</option><option>기타</option></select><textarea required placeholder="문의 내용을 입력해주세요."></textarea><button class="inquiry-submit" type="submit">문의 등록하기</button></form></div></div><script>function openInquiry(){document.getElementById('inquiryModal').classList.add('open');document.body.style.overflow='hidden'}function closeInquiry(){document.getElementById('inquiryModal').classList.remove('open');document.body.style.overflow=''}function submitInquiry(e){e.preventDefault();document.getElementById('inquirySuccess').classList.add('show');setTimeout(closeInquiry,1800)}document.addEventListener('keydown',e=>{if(e.key==='Escape')closeInquiry()});</script><script id="real-cart-script">
+(function(){
+ function read(){try{return JSON.parse(localStorage.getItem('myungjaCart')||'[]')}catch(e){return[]}}
+ function write(items){localStorage.setItem('myungjaCart',JSON.stringify(items));updateBag(items)}
+ function money(n){return Number(n).toLocaleString('ko-KR')+'원'}
+ function updateBag(items){var count=items.reduce(function(n,x){return n+(Number(x.qty)||0)},0);document.querySelectorAll('.header-icons a[href="cart.html"]').forEach(function(a){a.textContent='bag('+count+')'})}
+ function esc(v){var d=document.createElement('div');d.textContent=v==null?'':String(v);return d.innerHTML}
+ window.renderRealCart=function(){
+  var items=read(),box=document.getElementById('cartItems');box.innerHTML='';
+  items.forEach(function(x){var row=document.createElement('div');row.className='cart-item';row.dataset.key=x.key;row.dataset.price=x.price;row.dataset.qty=x.qty;row.innerHTML='<div class="checkbox"><input type="checkbox" checked></div><a class="cart-thumb" href="'+esc(x.url)+'"><img src="'+esc(x.image)+'" alt="'+esc(x.name)+'"></a><div class="cart-item-body"><div style="display:flex"><div><div class="ci-name"><a href="'+esc(x.url)+'">'+esc(x.name)+'</a></div><div class="ci-opt">'+esc(x.color)+' / '+esc(x.size)+'</div></div><button class="remove-btn" onclick="removeItem(this)">삭제</button></div><div class="ci-bottom"><div class="qty-control"><button onclick="changeQty(this,-1)">−</button><span class="qtyNum">'+x.qty+'</span><button onclick="changeQty(this,1)">+</button></div><div class="ci-price">'+money(x.price*x.qty)+'<span class="unit">'+money(x.price)+' × '+x.qty+'</span></div></div></div>';box.appendChild(row)});
+  var count=items.reduce(function(n,x){return n+x.qty},0),label=document.querySelector('.cart-list-head label');if(label)label.innerHTML='<input type="checkbox" checked> 전체선택 ('+count+'/'+count+')';
+  document.getElementById('cartLayout').style.display=items.length?'grid':'none';document.getElementById('emptyState').style.display=items.length?'none':'block';updateBag(items);recalc();
+ };
+ window.changeQty=function(btn,delta){var row=btn.closest('.cart-item'),items=read(),x=items.find(function(i){return i.key===row.dataset.key});if(!x)return;x.qty=Math.max(1,x.qty+delta);write(items);renderRealCart()};
+ window.removeItem=function(btn){var key=btn.closest('.cart-item').dataset.key;write(read().filter(function(x){return x.key!==key}));renderRealCart()};
+ var del=document.querySelector('.del-selected');if(del)del.onclick=function(){var selected=[].slice.call(document.querySelectorAll('.cart-item input[type="checkbox"]:checked')).map(function(c){return c.closest('.cart-item').dataset.key});write(read().filter(function(x){return selected.indexOf(x.key)<0}));renderRealCart()};
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',renderRealCart);else renderRealCart();
+})();
+</script><script src="myungja-unified.js"></script></body>
+</html>

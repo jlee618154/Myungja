@@ -1,0 +1,97 @@
+/* ABOUT MYUNGJA — reference layout */
+#about.brand-band {
+  min-height: 510px;
+  padding: 92px 0 96px;
+  display: flex;
+  align-items: center;
+  background: #3b2c21;
+  color: #f7f1e8;
+  scroll-margin-top: 76px;
+}
+
+#about .myungja-essay {
+  width: min(1040px, calc(100% - 48px));
+  max-width: 1040px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+#about .label {
+  display: block;
+  margin: 0 0 24px;
+  color: #f0a26e;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .29em;
+}
+
+#about h3 {
+  max-width: 980px;
+  margin: 0 auto;
+  color: #f8f3eb;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: clamp(28px, 2.15vw, 38px);
+  font-style: normal;
+  font-weight: 300;
+  line-height: 1.65;
+  letter-spacing: -.045em;
+  word-break: keep-all;
+}
+
+#about h3 > span { display: block; }
+
+#about h3 b {
+  color: #f2ad7d;
+  font-style: normal;
+  font-weight: 600;
+}
+
+#about .about-essay-copy {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 54px;
+  margin-top: 34px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(248, 243, 235, .25);
+}
+
+#about .about-essay-copy p {
+  margin: 0;
+  color: rgba(248, 243, 235, .88);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 2.05;
+  text-align: center;
+  word-break: keep-all;
+}
+
+@media (max-width: 760px) {
+  #about.brand-band {
+    min-height: auto;
+    padding: 72px 0 76px;
+  }
+
+  #about .myungja-essay { width: min(100% - 36px, 1040px); }
+  #about .label { margin-bottom: 20px; }
+
+  #about h3 {
+    padding: 0;
+    font-size: clamp(22px, 6.2vw, 28px);
+    line-height: 1.62;
+  }
+
+  #about h3 > span { display: block; }
+  #about h3 span + span::before { content: none; }
+
+  #about .about-essay-copy {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    margin-top: 28px;
+    padding-top: 24px;
+  }
+
+  #about .about-essay-copy p {
+    font-size: 12.5px;
+    line-height: 1.95;
+  }
+}
