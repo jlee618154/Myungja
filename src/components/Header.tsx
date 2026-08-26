@@ -2,14 +2,33 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useCart } from '../contexts/CartContext';
+import { assetUrl } from '../lib/format';
 import SearchOverlay from './SearchOverlay';
 import MiniCart from './MiniCart';
 import './Header.css';
 
 const NAV = [
-  { label: 'TOP', to: '/top', sub: '시그니처 에어핏 브라탑', subTo: '/product/signature-airfit-bra' },
-  { label: 'BOTTOM', to: '/bottom', sub: '소프트 저지 레깅스', subTo: '/product/soft-jersey-leggings' },
-  { label: 'OUTER', to: '/outer', sub: '스웨이 온더고 자켓', subTo: '/product/sway-onthego-jacket' },
+  {
+    label: 'TOP',
+    to: '/top',
+    sub: '시그니처 에어핏 브라탑',
+    subTo: '/product/signature-airfit-bra',
+    image: 'images/hero-3.png',
+  },
+  {
+    label: 'BOTTOM',
+    to: '/bottom',
+    sub: '소프트 저지 레깅스',
+    subTo: '/product/soft-jersey-leggings',
+    image: 'images/leggings-brown-1.png',
+  },
+  {
+    label: 'OUTER',
+    to: '/outer',
+    sub: '스웨이 온더고 자켓',
+    subTo: '/product/sway-onthego-jacket',
+    image: 'images/menu-outer.jpg',
+  },
 ];
 
 export default function Header() {
@@ -41,8 +60,9 @@ export default function Header() {
                   {item.label}
                 </Link>
                 <div className="nav-dropdown">
-                  <Link to={item.subTo} className="nav-dropdown-link link-hover">
-                    {item.sub}
+                  <Link to={item.subTo} className="nav-dropdown-card">
+                    <img src={assetUrl(item.image)} alt={item.sub} />
+                    <span className="nav-dropdown-link link-hover">{item.sub}</span>
                   </Link>
                 </div>
               </li>
