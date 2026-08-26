@@ -1,0 +1,54 @@
+.size-selector-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.size-btn {
+  width: 48px;
+  height: 40px;
+  border: 1px solid var(--color-border);
+  background: var(--color-ivory);
+  color: var(--color-dark-brown);
+  cursor: pointer;
+  font-size: var(--fs-body);
+  border-radius: var(--radius-button);
+}
+
+.size-btn.selected {
+  border-color: var(--color-dark-brown);
+  background: var(--color-dark-brown);
+  color: var(--color-ivory);
+}
+
+.size-btn:disabled {
+  cursor: not-allowed;
+}
+
+.size-guide-link {
+  margin-left: var(--space-3);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.size-guide-panel {
+  width: 480px;
+  padding: var(--space-6);
+  background: var(--color-ivory);
+}
+
+.size-guide-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: var(--space-5);
+}
+
+.size-guide-table th,
+.size-guide-table td {
+  border: 1px solid var(--color-border);
+  padding: var(--space-2);
+  text-align: center;
+  font-size: var(--fs-small);
+}

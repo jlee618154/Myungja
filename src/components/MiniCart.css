@@ -1,0 +1,94 @@
+.minicart-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(59, 44, 34, 0.4);
+  z-index: 500;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.minicart-panel {
+  width: 400px;
+  height: 100%;
+  background: var(--color-ivory);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.minicart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-5);
+}
+
+.minicart-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-gray-brown);
+}
+
+.minicart-empty {
+  flex: 1;
+}
+
+.minicart-lines {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  flex: 1;
+}
+
+.minicart-line {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  position: relative;
+}
+
+.minicart-line img {
+  width: 64px;
+  height: 80px;
+  object-fit: cover;
+}
+
+.minicart-line-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  flex: 1;
+}
+
+.minicart-remove {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-gray-brown);
+  align-self: flex-start;
+}
+
+.minicart-footer {
+  margin-top: var(--space-6);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-border);
+}
+
+.minicart-total {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+
+.minicart-actions {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.minicart-actions .btn {
+  flex: 1;
+}

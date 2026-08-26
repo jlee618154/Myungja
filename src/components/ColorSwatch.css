@@ -1,0 +1,28 @@
+.color-swatch-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.color-swatch {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+}
+
+.color-swatch.selected {
+  outline: 2px solid var(--color-dark-brown);
+  outline-offset: 2px;
+}
+
+.color-swatch:disabled {
+  cursor: not-allowed;
+}
+
+.color-swatch-label {
+  margin-left: var(--space-2);
+}

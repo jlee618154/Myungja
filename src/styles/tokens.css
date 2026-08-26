@@ -1,0 +1,46 @@
+:root {
+  /* Colors */
+  --color-ivory: #F7F3EC;
+  --color-warm-beige: #EDE3D3;
+  --color-dark-brown: #3B2C22;
+  --color-orange: #E08A4C;
+  --color-purple: #8C7A96;
+  --color-teal: #4E7C77;
+  --color-gray-brown: #8A7F73;
+  --color-border: #DCD4C8;
+  --color-error: #C0433A;
+  --color-success: #4E7C77;
+  --color-disabled-bg: #DCD4C8;
+  --color-disabled-text: #B3A99A;
+
+  /* Typography */
+  --font-kr: 'Pretendard', -apple-system, 'Malgun Gothic', sans-serif;
+  --font-en: 'EB Garamond', 'Cormorant Garamond', serif;
+
+  --fs-logo: 26px;
+  --fs-h1: 40px;
+  --fs-h2: 26px;
+  --fs-h3: 18px;
+  --fs-body: 15px;
+  --fs-small: 13px;
+  --fs-button: 15px;
+  --fs-price: 18px;
+  --fs-nav: 14px;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+
+  --container-max: 1280px;
+  --container-pad: 64px;
+  --radius-button: 2px;
+  --button-height: 52px;
+  --shadow-card: 0 4px 16px rgba(59, 44, 34, 0.08);
+}

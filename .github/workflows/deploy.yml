@@ -1,0 +1,66 @@
+name: Deploy React/Supabase preview to GitHub Pages
+
+on:
+  push:
+    branches: [react-supabase]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout react-supabase (this app)
+        uses: actions/checkout@v4
+        with:
+          path: app
+
+      - name: Checkout main (existing live site, unchanged)
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: site-root
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+
+      - name: Install dependencies
+        working-directory: app
+        run: npm ci
+
+      - name: Build preview app under /Myungja/preview/
+        working-directory: app
+        run: npm run build -- --base=/Myungja/preview/
+
+      - name: Assemble combined Pages output (existing site + /preview)
+        run: |
+          rm -rf site-root/.git site-root/.github
+          mkdir -p site-root/preview
+          cp -r app/dist/. site-root/preview/
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site-root
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

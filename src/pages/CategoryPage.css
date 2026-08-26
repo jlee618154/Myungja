@@ -1,0 +1,28 @@
+.category-page {
+  padding: var(--space-8) var(--container-pad) var(--space-9);
+}
+
+.category-title {
+  text-align: center;
+  margin-bottom: var(--space-6);
+}
+
+.category-sort {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+.category-sort button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-gray-brown);
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-6) var(--space-5);
+}

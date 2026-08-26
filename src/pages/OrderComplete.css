@@ -1,0 +1,32 @@
+.order-complete-loading {
+  padding: var(--space-9) var(--container-pad);
+  text-align: center;
+}
+
+.order-complete {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: var(--space-9) var(--container-pad);
+  text-align: center;
+}
+
+.order-complete-block {
+  margin-top: var(--space-6);
+  padding: var(--space-5);
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.order-complete-item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.order-complete-actions {
+  margin-top: var(--space-7);
+  display: flex;
+  justify-content: center;
+  gap: var(--space-3);
+}

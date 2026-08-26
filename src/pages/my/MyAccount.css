@@ -1,0 +1,64 @@
+.my-account-page {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: var(--space-8);
+  padding: var(--space-8) var(--container-pad) var(--space-9);
+  align-items: start;
+}
+
+.my-sidebar nav ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.my-sidebar a,
+.my-nav-btn {
+  font-size: var(--fs-body);
+  color: var(--color-dark-brown);
+  transition: color 0.2s ease;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+  font-family: inherit;
+}
+
+.my-sidebar a:hover,
+.my-nav-btn:hover {
+  color: var(--color-orange);
+}
+
+.my-nav-active {
+  color: var(--color-orange);
+  font-weight: 600;
+}
+
+.my-content {
+  min-width: 0;
+}
+
+.my-summary-card {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-6);
+  margin-bottom: var(--space-7);
+}
+
+.my-summary-card > div {
+  text-align: center;
+}
+
+.my-summary-value {
+  font-size: 22px;
+  font-weight: 600;
+  display: block;
+  margin-top: var(--space-2);
+}
+
+.my-section-title {
+  margin-bottom: var(--space-5);
+}
