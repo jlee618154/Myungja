@@ -4,9 +4,9 @@ import { assetUrl } from '../lib/format';
 import './Home.css';
 
 const HERO_SLIDES = [
-  { src: assetUrl('images/hero-1.png'), alt: 'MYUNGJA 룩북', objectPosition: 'center 20%' },
-  { src: assetUrl('images/hero-2.png'), alt: 'MYUNGJA 매거진', objectPosition: 'center' },
-  { src: assetUrl('images/hero-3.png'), alt: 'MYUNGJA 착장', objectPosition: 'center' },
+  { src: assetUrl('images/hero-1.png'), alt: 'MYUNGJA 소프트 저지 레깅스 착장', objectPosition: 'center 15%' },
+  { src: assetUrl('images/hero-2.jpg'), alt: 'MYUNGJA 등산 라이프스타일', objectPosition: 'center' },
+  { src: assetUrl('images/hero-3.png'), alt: 'MYUNGJA 마라톤 라이프스타일', objectPosition: 'center 20%' },
 ];
 
 const MD_PICKS = [
