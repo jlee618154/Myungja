@@ -11,6 +11,14 @@ import StarRating from '../components/StarRating';
 import Reviews from '../components/Reviews';
 import './ProductDetail.css';
 
+function ChevronIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="6 9 12 15 18 9" />
+    </svg>
+  );
+}
+
 export default function ProductDetail() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
@@ -22,6 +30,16 @@ export default function ProductDetail() {
   const [size, setSize] = useState<Size | null>(null);
   const [qty, setQty] = useState(1);
   const [message, setMessage] = useState<string | null>(null);
+  const [openSections, setOpenSections] = useState<Set<string>>(new Set());
+
+  const toggleSection = (key: string) => {
+    setOpenSections((prev) => {
+      const next = new Set(prev);
+      if (next.has(key)) next.delete(key);
+      else next.add(key);
+      return next;
+    });
+  };
 
   const load = async () => {
     setLoading(true);
@@ -185,19 +203,34 @@ export default function ProductDetail() {
             </button>
           </div>
 
-          <div className="product-summary card">
-            <div>
-              <p className="h3">핏</p>
-              <p className="text-small">{product.fit}</p>
-            </div>
-            <div>
-              <p className="h3">배송</p>
-              <p className="text-small">3만원 이상 무료배송 · 영업일 기준 2~3일 이내 출고</p>
-            </div>
-            <div>
-              <p className="h3">소재</p>
-              <p className="text-small">{product.material}</p>
-            </div>
+          <div className="product-summary">
+            {[
+              { key: 'fit', title: '핏', content: product.fit },
+              { key: 'shipping', title: '배송', content: '3만원 이상 무료배송 · 영업일 기준 2~3일 이내 출고' },
+              { key: 'material', title: '소재', content: product.material },
+            ].map((section) => {
+              const open = openSections.has(section.key);
+              return (
+                <div key={section.key} className={`accordion-item ${open ? 'open' : ''}`}>
+                  <button
+                    type="button"
+                    className="accordion-header"
+                    aria-expanded={open}
+                    onClick={() => toggleSection(section.key)}
+                  >
+                    <span className="h3">{section.title}</span>
+                    <span className="accordion-icon">
+                      <ChevronIcon />
+                    </span>
+                  </button>
+                  <div className="accordion-body">
+                    <div className="accordion-body-inner">
+                      <p className="text-small accordion-content">{section.content}</p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

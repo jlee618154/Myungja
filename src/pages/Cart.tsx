@@ -63,7 +63,8 @@ export default function Cart() {
   const selectedLines = lines.filter((l) => selected.has(lineKey(l.product_id, l.color_name, l.size)));
   const selectedSubtotal = selectedLines.reduce((sum, l) => sum + l.price * l.qty, 0);
   const shipping = selectedSubtotal > 0 && selectedSubtotal < 30000 ? 3000 : 0;
-  const finalTotal = selectedSubtotal + shipping;
+  const discount = 0;
+  const finalTotal = selectedSubtotal + shipping - discount;
 
   if (lines.length === 0) {
     return (
@@ -151,6 +152,10 @@ export default function Cart() {
         <div className="cart-summary-row">
           <span>배송비</span>
           <span>{shipping === 0 ? '무료' : formatKrw(shipping)}</span>
+        </div>
+        <div className="cart-summary-row">
+          <span>할인 금액</span>
+          <span>{discount === 0 ? '0원' : `-${formatKrw(discount)}`}</span>
         </div>
         <div className="cart-summary-row cart-summary-total">
           <span>최종 결제금액</span>

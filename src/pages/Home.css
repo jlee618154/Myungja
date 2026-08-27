@@ -1,5 +1,5 @@
 .md-pick {
-  padding: var(--space-9) var(--container-pad);
+  padding: var(--space-9) var(--container-pad) 96px;
 }
 
 .md-pick-title {
@@ -72,6 +72,12 @@
 
 .about-quote-highlight {
   color: var(--color-orange);
+}
+
+.about-quote-line {
+  display: inline-block;
+  white-space: nowrap;
+  font-size: clamp(14px, calc(3.3vw - 4px), 24px);
 }
 
 .about-divider {

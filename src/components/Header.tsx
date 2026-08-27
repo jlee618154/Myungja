@@ -4,8 +4,34 @@ import { useAuth } from '../contexts/AuthContext';
 import { useCart } from '../contexts/CartContext';
 import { assetUrl } from '../lib/format';
 import SearchOverlay from './SearchOverlay';
-import MiniCart from './MiniCart';
 import './Header.css';
+
+function SearchIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="11" cy="11" r="7" />
+      <line x1="21" y1="21" x2="16.2" y2="16.2" />
+    </svg>
+  );
+}
+
+function UserIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="8" r="3.5" />
+      <path d="M5 20c0-3.5 3.1-6 7-6s7 2.5 7 6" />
+    </svg>
+  );
+}
+
+function BagIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M6 8h12l-1 12H7L6 8z" />
+      <path d="M9 8V6a3 3 0 0 1 6 0v2" />
+    </svg>
+  );
+}
 
 const NAV = [
   {
@@ -35,7 +61,6 @@ export default function Header() {
   const { user } = useAuth();
   const { totalCount } = useCart();
   const [searchOpen, setSearchOpen] = useState(false);
-  const [cartOpen, setCartOpen] = useState(false);
   const navigate = useNavigate();
 
   const goAbout = () => {
@@ -78,29 +103,32 @@ export default function Header() {
         <div className="header-actions">
           <button
             type="button"
-            className="icon-btn"
+            className="icon-btn link-hover"
             aria-label="검색"
             onClick={() => setSearchOpen(true)}
           >
-            검색
+            <span className="icon-btn-icon">
+              <SearchIcon />
+            </span>
+            <span className="icon-btn-label">검색</span>
           </button>
           <Link to={user ? '/my' : '/login'} className="icon-btn link-hover">
-            MY
+            <span className="icon-btn-icon">
+              <UserIcon />
+            </span>
+            <span className="icon-btn-label">MY</span>
           </Link>
-          <button
-            type="button"
-            className="icon-btn cart-btn"
-            aria-label="장바구니"
-            onClick={() => setCartOpen(true)}
-          >
-            BAG
-            {totalCount > 0 && <span className="cart-badge">{totalCount}</span>}
-          </button>
+          <Link to="/cart" className="icon-btn cart-btn link-hover" aria-label="장바구니">
+            <span className="icon-btn-icon">
+              <BagIcon />
+              {totalCount > 0 && <span className="cart-badge">{totalCount}</span>}
+            </span>
+            <span className="icon-btn-label">BAG</span>
+          </Link>
         </div>
       </div>
 
       {searchOpen && <SearchOverlay onClose={() => setSearchOpen(false)} />}
-      {cartOpen && <MiniCart onClose={() => setCartOpen(false)} />}
     </header>
   );
 }

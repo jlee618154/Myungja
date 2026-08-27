@@ -4,9 +4,9 @@ import { assetUrl } from '../lib/format';
 import './Home.css';
 
 const HERO_SLIDES = [
-  { src: assetUrl('images/hero-1.png'), alt: 'MYUNGJA 소프트 저지 레깅스 착장', objectPosition: 'center 15%' },
-  { src: assetUrl('images/hero-2.jpg'), alt: 'MYUNGJA 등산 라이프스타일', objectPosition: 'center' },
-  { src: assetUrl('images/hero-3.png'), alt: 'MYUNGJA 마라톤 라이프스타일', objectPosition: 'center 20%' },
+  { src: assetUrl('images/hero-1.png'), alt: 'MYUNGJA 소프트 저지 레깅스 착장', objectPosition: 'center top' },
+  { src: assetUrl('images/hero-2.jpg'), alt: 'MYUNGJA 등산 라이프스타일', objectPosition: 'center top' },
+  { src: assetUrl('images/hero-3.png'), alt: 'MYUNGJA 마라톤 라이프스타일', objectPosition: 'center top' },
 ];
 
 const MD_PICKS = [
@@ -59,7 +59,7 @@ export default function Home() {
           <p className="about-quote h1">
             <span className="about-quote-highlight">몸을 조이지 않고, 삶의 속도를 따라가는 옷.</span>
             <br />
-            명자는 애쓰지 않는 편안함을 가장 아름다운 태도라 믿습니다.
+            <span className="about-quote-line">명자는 애쓰지 않는 편안함을 가장 아름다운 태도라 믿습니다.</span>
           </p>
           <div className="about-divider" />
           <div className="about-columns">

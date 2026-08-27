@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
 import './InquiryPopup.css';
@@ -16,6 +16,12 @@ export default function InquiryPopup() {
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const openHandler = () => setOpen(true);
+    window.addEventListener('open-inquiry', openHandler);
+    return () => window.removeEventListener('open-inquiry', openHandler);
+  }, []);
 
   const reset = () => {
     setName('');
