@@ -21,7 +21,7 @@ with p as (
   ) returning id
 )
 insert into product_options (product_id, color_name, color_hex, size, stock_qty)
-select p.id, c.color_name, c.color_hex, s.size, 20
+select p.id, c.color_name, c.color_hex, s.size::product_size, 20
 from p, (values ('그레이','#b9b4ac'),('샌드베이지','#d8c6a8'),('브라운','#6e5644'),('블랙','#1e1912')) as c(color_name, color_hex)
 cross join (values ('S'),('M'),('L'),('XL')) as s(size);
 
@@ -48,7 +48,7 @@ with p as (
   ) returning id
 )
 insert into product_options (product_id, color_name, color_hex, size, stock_qty)
-select p.id, c.color_name, c.color_hex, s.size, 20
+select p.id, c.color_name, c.color_hex, s.size::product_size, 20
 from p, (values ('블랙','#1e1912'),('베이지','#d8c6a8'),('퍼플','#7c6c9c'),('진네이비','#2c3550')) as c(color_name, color_hex)
 cross join (values ('S'),('M'),('L'),('XL')) as s(size);
 
@@ -75,7 +75,7 @@ with p as (
   ) returning id
 )
 insert into product_options (product_id, color_name, color_hex, size, stock_qty)
-select p.id, c.color_name, c.color_hex, s.size, 20
+select p.id, c.color_name, c.color_hex, s.size::product_size, 20
 from p, (values ('블랙','#1e1912'),('네이비','#2c3550'),('퍼플','#7c6c9c')) as c(color_name, color_hex)
 cross join (values ('S'),('M'),('L'),('XL')) as s(size);
 
@@ -102,7 +102,7 @@ with p as (
   ) returning id
 )
 insert into product_options (product_id, color_name, color_hex, size, stock_qty)
-select p.id, c.color_name, c.color_hex, s.size, 20
+select p.id, c.color_name, c.color_hex, s.size::product_size, 20
 from p, (values ('화이트','#faf7f0'),('블랙','#1e1912'),('샌디베이지','#d8c6a8'),('카키','#7c7a54'),('라벤더','#b9afd6')) as c(color_name, color_hex)
 cross join (values ('S'),('M'),('L'),('XL')) as s(size);
 
@@ -129,7 +129,7 @@ with p as (
   ) returning id
 )
 insert into product_options (product_id, color_name, color_hex, size, stock_qty)
-select p.id, c.color_name, c.color_hex, s.size, 20
+select p.id, c.color_name, c.color_hex, s.size::product_size, 20
 from p, (values ('베이지','#d8c6a8'),('브라운','#6e5644'),('샌드베이지','#c9a87e')) as c(color_name, color_hex)
 cross join (values ('S'),('M'),('L'),('XL')) as s(size);
 
@@ -156,7 +156,7 @@ with p as (
   ) returning id
 )
 insert into product_options (product_id, color_name, color_hex, size, stock_qty)
-select p.id, c.color_name, c.color_hex, s.size, 20
+select p.id, c.color_name, c.color_hex, s.size::product_size, 20
 from p, (values ('연베이지','#ede3cf'),('베이지','#d8c6a8'),('차콜','#3b3b3b'),('네이비블루','#2c3550'),('퍼플','#7c6c9c')) as c(color_name, color_hex)
 cross join (values ('S'),('M'),('L'),('XL')) as s(size);
 
