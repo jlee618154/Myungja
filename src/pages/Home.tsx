@@ -5,9 +5,9 @@ import { useReveal } from '../hooks/useReveal';
 import './Home.css';
 
 const HERO_SLIDES = [
-  { src: assetUrl('images/hero-walk.png'), alt: 'MYUNGJA 데일리 워크 착장', objectPosition: 'center 4%' },
-  { src: assetUrl('images/hero-studio.png'), alt: 'MYUNGJA 스튜디오 착장', objectPosition: 'center 8%' },
-  { src: assetUrl('images/hero-meditation.png'), alt: 'MYUNGJA 명상/요가 라이프스타일', objectPosition: 'center 10%' },
+  { src: assetUrl('images/hero-walk.png'), alt: 'MYUNGJA 데일리 워크 착장', objectPosition: 'center' },
+  { src: assetUrl('images/hero-studio.png'), alt: 'MYUNGJA 스튜디오 착장', objectPosition: 'center' },
+  { src: assetUrl('images/hero-meditation.png'), alt: 'MYUNGJA 명상/요가 라이프스타일', objectPosition: 'center' },
 ];
 
 const MD_PICKS = [
