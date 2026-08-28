@@ -1,3 +1,9 @@
+.hero-shrink {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
 .reveal {
   opacity: 0;
   transform: translateY(48px);
