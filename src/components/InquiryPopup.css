@@ -3,22 +3,40 @@
   right: var(--space-6);
   bottom: var(--space-6);
   z-index: 300;
-  height: 52px;
-  padding: 0 var(--space-5);
+  width: 62px;
+  height: 62px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
   background: var(--color-dark-brown);
   color: var(--color-ivory);
   border: none;
-  border-radius: var(--radius-button);
-  font-size: var(--fs-button);
-  font-weight: 500;
-  letter-spacing: 0.02em;
+  border-radius: 50%;
   cursor: pointer;
   box-shadow: var(--shadow-card);
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .inquiry-fab:hover {
   background: var(--color-orange);
+  transform: scale(1.05);
+}
+
+.inquiry-fab-icon {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+.inquiry-fab-label {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  color: var(--color-ivory);
 }
 
 .inquiry-overlay {

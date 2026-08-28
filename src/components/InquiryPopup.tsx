@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
+import { assetUrl } from '../lib/format';
 import './InquiryPopup.css';
 
 const TYPES = ['상품 문의', '주문/배송 문의', '교환/환불 문의', '기타 문의'];
@@ -63,8 +64,9 @@ export default function InquiryPopup() {
 
   return (
     <>
-      <button type="button" className="inquiry-fab" onClick={() => setOpen(true)}>
-        1:1 문의
+      <button type="button" className="inquiry-fab" onClick={() => setOpen(true)} aria-label="1:1 문의">
+        <img className="inquiry-fab-icon" src={assetUrl('images/myungja_icon_white.png')} alt="" />
+        <span className="inquiry-fab-label">1:1문의</span>
       </button>
 
       {open && (
