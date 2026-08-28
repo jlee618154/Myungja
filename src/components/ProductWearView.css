@@ -1,0 +1,30 @@
+/* Full-width front and back product styling view */
+.product-wear-view {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #eee5d8;
+}
+
+.product-wear-view picture,
+.product-wear-view img {
+  display: block;
+  width: 100%;
+}
+
+.product-wear-view img {
+  height: 100vh;
+  min-height: 640px;
+  object-fit: cover;
+  object-position: center;
+}
+
+@media (max-width: 760px) {
+  .product-wear-view img {
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+  }
+}

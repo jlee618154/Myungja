@@ -2,7 +2,9 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useCart } from '../contexts/CartContext';
+import { supabase } from '../lib/supabase';
 import { assetUrl } from '../lib/format';
+import type { Category } from '../types';
 import SearchOverlay from './SearchOverlay';
 import './Header.css';
 
@@ -33,35 +35,28 @@ function BagIcon() {
   );
 }
 
-const NAV = [
-  {
-    label: 'TOP',
-    to: '/top',
-    sub: '시그니처 에어핏 브라탑',
-    subTo: '/product/signature-airfit-bra',
-    image: 'images/hero-3.png',
-  },
-  {
-    label: 'BOTTOM',
-    to: '/bottom',
-    sub: '소프트 저지 레깅스',
-    subTo: '/product/soft-jersey-leggings',
-    image: 'images/leggings-brown-1.png',
-  },
-  {
-    label: 'OUTER',
-    to: '/outer',
-    sub: '스웨이 온더고 자켓',
-    subTo: '/product/sway-onthego-jacket',
-    image: 'images/menu-outer.jpg',
-  },
+const NAV: { label: string; to: string; category: Category }[] = [
+  { label: 'TOP', to: '/top', category: 'TOP' },
+  { label: 'BOTTOM', to: '/bottom', category: 'BOTTOM' },
+  { label: 'OUTER', to: '/outer', category: 'OUTER' },
 ];
+
+interface NavProduct {
+  slug: string;
+  name: string;
+  image: string;
+}
 
 export default function Header() {
   const { user } = useAuth();
   const { totalCount } = useCart();
   const [searchOpen, setSearchOpen] = useState(false);
   const [activeNav, setActiveNav] = useState<string | null>(null);
+  const [productsByCategory, setProductsByCategory] = useState<Record<Category, NavProduct[]>>({
+    TOP: [],
+    BOTTOM: [],
+    OUTER: [],
+  });
   const navigate = useNavigate();
   const location = useLocation();
   const headerRef = useRef<HTMLElement>(null);
@@ -69,6 +64,20 @@ export default function Header() {
   useEffect(() => {
     setActiveNav(null);
   }, [location.pathname]);
+
+  useEffect(() => {
+    supabase
+      .from('products')
+      .select('slug, name, category, base_image_url')
+      .order('created_at', { ascending: true })
+      .then(({ data }) => {
+        const grouped: Record<Category, NavProduct[]> = { TOP: [], BOTTOM: [], OUTER: [] };
+        (data ?? []).forEach((p: any) => {
+          grouped[p.category as Category]?.push({ slug: p.slug, name: p.name, image: p.base_image_url });
+        });
+        setProductsByCategory(grouped);
+      });
+  }, []);
 
   const goAbout = () => {
     navigate('/');
@@ -101,12 +110,12 @@ export default function Header() {
               <li
                 key={item.label}
                 className="nav-item"
-                onMouseEnter={() => setActiveNav(item.label)}
+                onMouseEnter={() => setActiveNav(item.category)}
               >
                 <Link
                   to={item.to}
                   className="nav-link link-hover"
-                  onFocus={() => setActiveNav(item.label)}
+                  onFocus={() => setActiveNav(item.category)}
                 >
                   {item.label}
                 </Link>
@@ -158,12 +167,14 @@ export default function Header() {
           {NAV.map((item) => (
             <div
               key={item.label}
-              className={`nav-submenu-panel ${activeNav === item.label ? 'visible' : ''}`}
+              className={`nav-submenu-panel ${activeNav === item.category ? 'visible' : ''}`}
             >
-              <Link to={item.subTo} className="nav-submenu-link link-hover">
-                <img src={assetUrl(item.image)} alt={item.sub} />
-                <span>{item.sub}</span>
-              </Link>
+              {productsByCategory[item.category].map((p) => (
+                <Link key={p.slug} to={`/product/${p.slug}`} className="nav-submenu-link link-hover">
+                  <img src={assetUrl(p.image)} alt={p.name} />
+                  <span>{p.name}</span>
+                </Link>
+              ))}
             </div>
           ))}
         </div>

@@ -163,11 +163,6 @@
   color: var(--color-gray-brown);
 }
 
-.product-fullscreen {
-  width: 100%;
-  display: block;
-}
-
 .product-description {
   padding: var(--space-9) var(--container-pad);
 }

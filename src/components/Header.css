@@ -100,6 +100,8 @@
 
 .nav-submenu-panel.visible {
   display: flex;
+  flex-wrap: wrap;
+  row-gap: var(--space-4);
   gap: var(--space-6);
 }
 

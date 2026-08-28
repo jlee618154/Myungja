@@ -9,6 +9,7 @@ import ColorSwatch from '../components/ColorSwatch';
 import SizeSelector from '../components/SizeSelector';
 import StarRating from '../components/StarRating';
 import Reviews from '../components/Reviews';
+import '../components/ProductWearView.css';
 import './ProductDetail.css';
 
 function ChevronIcon() {
@@ -227,7 +228,9 @@ export default function ProductDetail() {
       </div>
 
       {product.fullscreen_image_url && (
-        <img className="product-fullscreen" src={assetUrl(product.fullscreen_image_url)} alt={`${product.name} 착용컷`} />
+        <section className="product-wear-view" aria-label={`${product.name} 착용 앞모습과 뒷모습`}>
+          <img src={assetUrl(product.fullscreen_image_url)} alt={`${product.name} 착용컷`} />
+        </section>
       )}
 
       <div className="container product-summary">
