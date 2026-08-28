@@ -21,7 +21,7 @@ with p as (
     '소프트 니트 나일론 88% · 스판덱스 12%',
     '미지근한 물보다 찬물을 사용해 세탁망에 넣어주세요. 옷걸이 건조 대신 형태를 정돈해 그늘에서 평평하게 건조하는 것을 권장합니다.',
     '요가, 필라테스, 데일리 이너웨어',
-    'images/airy-knit-bra-black-1.png', 'images/airy-knit-bra-black-2.png'
+    'images/airy-knit-bra-black-1.png', 'images/airy-front-back.png'
   where not exists (select 1 from products where slug = 'airy-knit-bra-top')
   returning id
 ),
@@ -51,7 +51,7 @@ with p as (
     '경량 기능성 폴리에스터 88% · 스판덱스 12%',
     '지퍼를 끝까지 잠근 뒤 뒤집어 찬물 세탁하세요. 섬유유연제를 과하게 사용하면 흡한속건 기능이 저하될 수 있습니다.',
     '러닝, 가벼운 등산, 데일리 아우터',
-    'images/breeze-crop-halfzip-black-1.png', 'images/breeze-crop-halfzip-black-2.png'
+    'images/breeze-crop-halfzip-black-1.png', 'images/breeze-front-back.png'
   where not exists (select 1 from products where slug = 'breeze-crop-half-zip')
   returning id
 ),
@@ -81,7 +81,7 @@ with p as (
     '쿨터치 나일론 76% · 폴리에스터 16% · 스판덱스 8%',
     '땀을 흘린 뒤에는 오래 두지 말고 찬물에 세탁하세요. 건조기와 뜨거운 물은 냉감 기능과 신축성을 떨어뜨릴 수 있습니다.',
     '여름 러닝, 요가, 데일리',
-    'images/cool-touch-sleeveless-black-1.png', 'images/cool-touch-sleeveless-black-2.png'
+    'images/cool-touch-sleeveless-black-1.png', 'images/cool-front-back.png'
   where not exists (select 1 from products where slug = 'cool-touch-sleeveless')
   returning id
 ),
@@ -111,7 +111,7 @@ with p as (
     '코튼 55% · 모달 39% · 스판덱스 6%',
     '비슷한 색상끼리 찬물 세탁하고 그늘에서 자연 건조하세요. 프린트나 원단 손상을 줄이려면 뒤집어 세탁하는 것이 좋습니다.',
     '데일리, 가벼운 산책, 이너웨어',
-    'images/daily-round-tee-white-1.png', 'images/daily-round-tee-white-2.png'
+    'images/daily-round-tee-white-1.png', 'images/daily-front-back.png'
   where not exists (select 1 from products where slug = 'daily-round-tee')
   returning id
 ),
@@ -141,7 +141,7 @@ with p as (
     '모달 48% · 코튼 46% · 스판덱스 6%',
     '찬물의 약한 코스로 세탁망 사용을 권장합니다. 젖은 상태에서 비틀어 짜지 말고 형태를 정돈해 건조하세요.',
     '데일리, 사무실 이너웨어, 가벼운 외출',
-    'images/soft-cap-sleeve-tee-beige-1.png', 'images/soft-cap-sleeve-tee-beige-2.png'
+    'images/soft-cap-sleeve-tee-beige-1.png', 'images/soft-front-back.png'
   where not exists (select 1 from products where slug = 'soft-jersey-cap-sleeve-tee')
   returning id
 ),
@@ -171,7 +171,7 @@ with p as (
     '레이온 48% · 폴리에스터 46% · 스판덱스 6%',
     '세탁망에 넣어 찬물 울 코스로 세탁하세요. 보풀이 생기지 않도록 거친 소재와 분리하고, 옷걸이보다 접어서 보관하는 것을 권장합니다.',
     '산책, 이동, 가벼운 스트레칭',
-    'images/warming-cardigan-beige-1.png', 'images/warming-cardigan-beige-2.png'
+    'images/warming-cardigan-beige-1.png', 'images/warming-front-back.png'
   where not exists (select 1 from products where slug = 'warming-long-cardigan')
   returning id
 ),
