@@ -36,11 +36,17 @@ export default function MdPick() {
 
   return (
     <div className="md-pick-page">
-      <section className="md-pick-hero" style={{ backgroundImage: `url(${assetUrl(content.heroImage)})` }}>
-        <div className="md-pick-hero-inner container">
-          <p className="md-pick-eyebrow en-label">{content.eyebrow}</p>
-          <h1 className="h1">{content.title}</h1>
-          <p className="md-pick-lead">{content.lead}</p>
+      <section
+        className="md-pick-hero"
+        style={{ backgroundImage: `url(${assetUrl(content.heroImage)})` }}
+        aria-label={`${content.eyebrow} — ${content.title}`}
+      >
+        {/* title/lead are baked into the hero photo itself; kept here visually-hidden for
+            screen readers and SEO instead of duplicating the text on top of the image */}
+        <div className="visually-hidden">
+          <p>{content.eyebrow}</p>
+          <h1>{content.title}</h1>
+          <p>{content.lead}</p>
         </div>
       </section>
 

@@ -22,7 +22,7 @@ export interface MdPickContent {
 export const MD_PICK_CONTENT: Record<string, MdPickContent> = {
   hiking: {
     key: 'hiking',
-    heroImage: 'images/md-hiking.jpg',
+    heroImage: 'images/md-hiking-hero.png',
     eyebrow: 'MD PICK · HIKING',
     title: '높이 오를수록, 움직임은 가볍게',
     lead: '거친 암릉에서도 몸의 리듬을 잃지 않도록, 필요한 보호와 편안함만 담았습니다.',
@@ -49,7 +49,7 @@ export const MD_PICK_CONTENT: Record<string, MdPickContent> = {
   },
   marathon: {
     key: 'marathon',
-    heroImage: 'images/md-marathon.jpg',
+    heroImage: 'images/md-marathon-hero.png',
     eyebrow: 'MD PICK · MARATHON',
     title: '기록보다 오래 남는, 나만의 리듬',
     lead: '가볍게 지지하는 브라탑과 차분한 컬러의 조합으로 긴 호흡을 이어갑니다.',
@@ -76,7 +76,7 @@ export const MD_PICK_CONTENT: Record<string, MdPickContent> = {
   },
   yoga: {
     key: 'yoga',
-    heroImage: 'images/md-yoga.jpg',
+    heroImage: 'images/md-yoga-hero.png',
     eyebrow: 'MD PICK · YOGA',
     title: '균형은 힘이 아니라, 집중에서 시작됩니다',
     lead: '고난도 동작에서도 흐트러지지 않는 부드러운 지지력과 차분한 색의 균형.',
