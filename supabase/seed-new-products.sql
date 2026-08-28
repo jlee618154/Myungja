@@ -33,9 +33,8 @@ o as (
   returning 1
 )
 insert into product_images (product_id, color_name, sort_order, image_url)
-select p.id, c.color_name, i.sort_order, i.image_url
+select p.id, '그레이', i.sort_order, i.image_url
 from p
-cross join (values ('그레이'),('샌드베이지'),('브라운'),('블랙')) as c(color_name)
 cross join (values (0, 'images/airy-knit-bra-black-1.png'), (1, 'images/airy-knit-bra-black-2.png')) as i(sort_order, image_url);
 
 
@@ -63,9 +62,8 @@ o as (
   returning 1
 )
 insert into product_images (product_id, color_name, sort_order, image_url)
-select p.id, c.color_name, i.sort_order, i.image_url
+select p.id, '블랙', i.sort_order, i.image_url
 from p
-cross join (values ('블랙'),('베이지'),('퍼플'),('진네이비')) as c(color_name)
 cross join (values (0, 'images/breeze-crop-halfzip-black-1.png'), (1, 'images/breeze-crop-halfzip-black-2.png')) as i(sort_order, image_url);
 
 
@@ -93,9 +91,8 @@ o as (
   returning 1
 )
 insert into product_images (product_id, color_name, sort_order, image_url)
-select p.id, c.color_name, i.sort_order, i.image_url
+select p.id, '블랙', i.sort_order, i.image_url
 from p
-cross join (values ('블랙'),('네이비'),('퍼플')) as c(color_name)
 cross join (values (0, 'images/cool-touch-sleeveless-black-1.png'), (1, 'images/cool-touch-sleeveless-black-2.png')) as i(sort_order, image_url);
 
 
@@ -123,9 +120,8 @@ o as (
   returning 1
 )
 insert into product_images (product_id, color_name, sort_order, image_url)
-select p.id, c.color_name, i.sort_order, i.image_url
+select p.id, '화이트', i.sort_order, i.image_url
 from p
-cross join (values ('화이트'),('블랙'),('샌디베이지'),('카키'),('라벤더')) as c(color_name)
 cross join (values (0, 'images/daily-round-tee-white-1.png'), (1, 'images/daily-round-tee-white-2.png')) as i(sort_order, image_url);
 
 
@@ -153,9 +149,8 @@ o as (
   returning 1
 )
 insert into product_images (product_id, color_name, sort_order, image_url)
-select p.id, c.color_name, i.sort_order, i.image_url
+select p.id, '베이지', i.sort_order, i.image_url
 from p
-cross join (values ('베이지'),('브라운'),('샌드베이지')) as c(color_name)
 cross join (values (0, 'images/soft-cap-sleeve-tee-beige-1.png'), (1, 'images/soft-cap-sleeve-tee-beige-2.png')) as i(sort_order, image_url);
 
 
@@ -183,9 +178,8 @@ o as (
   returning 1
 )
 insert into product_images (product_id, color_name, sort_order, image_url)
-select p.id, c.color_name, i.sort_order, i.image_url
+select p.id, '연베이지', i.sort_order, i.image_url
 from p
-cross join (values ('연베이지'),('베이지'),('차콜'),('네이비블루'),('퍼플')) as c(color_name)
 cross join (values (0, 'images/warming-cardigan-beige-1.png'), (1, 'images/warming-cardigan-beige-2.png')) as i(sort_order, image_url);
 
 commit;

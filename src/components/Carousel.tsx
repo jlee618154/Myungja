@@ -18,7 +18,13 @@ export default function Carousel({
 }) {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setMounted(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
 
   useEffect(() => {
     if (paused || slides.length <= 1) return;
@@ -40,7 +46,7 @@ export default function Carousel({
       onMouseLeave={() => setPaused(false)}
     >
       {slides.map((s, i) => (
-        <div key={s.src} className={`carousel-slide ${i === index ? 'active' : ''}`}>
+        <div key={s.src} className={`carousel-slide ${i === index && mounted ? 'active' : ''}`}>
           <img src={s.src} alt={s.alt} style={{ objectPosition: s.objectPosition ?? 'center' }} />
           <div className="carousel-overlay" />
         </div>

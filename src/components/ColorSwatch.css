@@ -12,6 +12,7 @@
   cursor: pointer;
   padding: 0;
   position: relative;
+  overflow: hidden;
 }
 
 .color-swatch.selected {
