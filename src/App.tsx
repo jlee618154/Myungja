@@ -7,6 +7,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
 import CategoryPage from './pages/CategoryPage';
 import ProductDetail from './pages/ProductDetail';
+import MdPick from './pages/MdPick';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import OrderComplete from './pages/OrderComplete';
@@ -41,6 +42,7 @@ export default function App() {
           <Route path="/bottom" element={<CategoryPage category="BOTTOM" />} />
           <Route path="/outer" element={<CategoryPage category="OUTER" />} />
           <Route path="/product/:slug" element={<ProductDetail />} />
+          <Route path="/md/:activity" element={<MdPick />} />
 
           <Route path="/cart" element={<Cart />} />
           <Route

@@ -1,0 +1,143 @@
+.md-pick-hero {
+  height: 70vh;
+  min-height: 480px;
+  background-size: cover;
+  background-position: center top;
+  display: flex;
+  align-items: flex-end;
+  position: relative;
+}
+
+.md-pick-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(59, 44, 34, 0.15) 0%, rgba(59, 44, 34, 0.65) 100%);
+}
+
+.md-pick-hero-inner {
+  position: relative;
+  padding-bottom: var(--space-8);
+  color: var(--color-ivory);
+}
+
+.md-pick-eyebrow {
+  color: var(--color-orange);
+  font-size: var(--fs-small);
+  letter-spacing: 0.12em;
+  margin-bottom: var(--space-4);
+}
+
+.md-pick-hero-inner h1 {
+  max-width: 640px;
+  margin-bottom: var(--space-4);
+}
+
+.md-pick-lead {
+  max-width: 520px;
+  color: var(--color-ivory);
+  opacity: 0.9;
+}
+
+.md-pick-essay {
+  padding: var(--space-9) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.md-pick-essay-grid {
+  display: grid;
+  grid-template-columns: 0.8fr 1.6fr;
+  gap: var(--space-8);
+}
+
+.md-pick-tag {
+  color: var(--color-orange);
+  font-size: var(--fs-small);
+  letter-spacing: 0.12em;
+  margin-bottom: var(--space-3);
+  display: block;
+}
+
+.md-pick-essay-copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  color: var(--color-gray-brown);
+  line-height: 1.9;
+}
+
+.md-pick-briefing {
+  background: var(--color-warm-beige);
+  padding: var(--space-9) 0;
+}
+
+.md-pick-briefing-title {
+  margin-bottom: var(--space-7);
+}
+
+.md-pick-briefing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+
+.md-pick-briefing-card {
+  padding: var(--space-5);
+  background: var(--color-ivory);
+  border: 1px solid var(--color-border);
+}
+
+.md-pick-briefing-label {
+  color: var(--color-orange);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  margin-bottom: var(--space-3);
+}
+
+.md-pick-products {
+  padding: var(--space-9) var(--container-pad);
+}
+
+.md-pick-products-title {
+  margin-bottom: var(--space-7);
+}
+
+.md-pick-products-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+
+.md-pick-product-caption {
+  margin-top: var(--space-2);
+}
+
+.md-pick-closing {
+  background: var(--color-dark-brown);
+  color: var(--color-ivory);
+  padding: var(--space-9) 0;
+  text-align: center;
+}
+
+.md-pick-closing-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.md-pick-closing-quote {
+  max-width: 640px;
+  color: var(--color-ivory);
+}
+
+@media (max-width: 900px) {
+  .md-pick-essay-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+  .md-pick-briefing-grid,
+  .md-pick-products-grid {
+    grid-template-columns: 1fr;
+  }
+}

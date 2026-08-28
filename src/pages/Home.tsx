@@ -15,21 +15,21 @@ const MD_PICKS = [
     title: '등산',
     image: assetUrl('images/md-hiking.jpg'),
     copy: '가파른 길 위에서도 몸을 조이지 않는 편안함. 스웨이 온더고 자켓과 저지 레깅스의 조합.',
-    to: '/product/sway-onthego-jacket',
+    to: '/md/hiking',
   },
   {
     key: 'marathon',
     title: '마라톤',
     image: assetUrl('images/md-marathon.jpg'),
     copy: '속도를 따라가되 애쓰지 않는 착용감. 에어핏 브라탑과 저지 레깅스의 조합.',
-    to: '/product/signature-airfit-bra',
+    to: '/md/marathon',
   },
   {
     key: 'yoga',
     title: '요가',
     image: assetUrl('images/md-yoga.jpg'),
     copy: '숨을 따라 움직이는 순간까지 편안하게. 에어핏 브라탑과 저지 레깅스의 조합.',
-    to: '/product/soft-jersey-leggings',
+    to: '/md/yoga',
   },
 ];
 
