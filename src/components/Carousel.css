@@ -6,11 +6,8 @@
 }
 
 .carousel-hero {
-  height: 100%;
-}
-
-.carousel-hero .carousel-slide img {
-  object-fit: contain;
+  height: 90vh;
+  min-height: 640px;
 }
 
 .carousel-gallery {

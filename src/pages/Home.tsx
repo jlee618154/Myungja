@@ -1,13 +1,12 @@
 import { Link } from 'react-router-dom';
 import Carousel from '../components/Carousel';
 import { assetUrl } from '../lib/format';
-import { useReveal } from '../hooks/useReveal';
 import './Home.css';
 
 const HERO_SLIDES = [
-  { src: assetUrl('images/hero-walk.png'), alt: 'MYUNGJA 데일리 워크 착장', objectPosition: 'center' },
-  { src: assetUrl('images/hero-studio.png'), alt: 'MYUNGJA 스튜디오 착장', objectPosition: 'center' },
-  { src: assetUrl('images/hero-meditation.png'), alt: 'MYUNGJA 명상/요가 라이프스타일', objectPosition: 'center' },
+  { src: assetUrl('images/hero-walk.png'), alt: 'MYUNGJA 데일리 워크 착장', objectPosition: 'center 3%' },
+  { src: assetUrl('images/hero-studio.png'), alt: 'MYUNGJA 스튜디오 착장', objectPosition: 'center 5%' },
+  { src: assetUrl('images/hero-meditation.png'), alt: 'MYUNGJA 명상/요가 라이프스타일', objectPosition: 'center 8%' },
 ];
 
 const MD_PICKS = [
@@ -35,20 +34,11 @@ const MD_PICKS = [
 ];
 
 export default function Home() {
-  const aboutReveal = useReveal<HTMLElement>();
-  const mdPickReveal = useReveal<HTMLElement>();
-
   return (
     <div>
-      <div className="home-hero-fixed">
-        <Carousel slides={HERO_SLIDES} intervalMs={2000} />
-      </div>
+      <Carousel slides={HERO_SLIDES} intervalMs={2000} />
 
-      <section
-        id="about-myungja"
-        ref={aboutReveal.ref}
-        className={`about-section home-scroll-start reveal ${aboutReveal.visible ? 'reveal-visible' : ''}`}
-      >
+      <section id="about-myungja" className="about-section">
         <div className="container about-inner">
           <p className="about-eyebrow en-label">ABOUT MYUNGJA</p>
           <p className="about-quote h1">
@@ -70,10 +60,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section
-        ref={mdPickReveal.ref}
-        className={`md-pick container reveal ${mdPickReveal.visible ? 'reveal-visible' : ''}`}
-      >
+      <section className="md-pick container">
         <h2 className="h2 en-label md-pick-title">MD PICK</h2>
         <div className="md-pick-grid">
           {MD_PICKS.map((m) => (
