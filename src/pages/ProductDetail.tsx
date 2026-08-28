@@ -202,42 +202,42 @@ export default function ProductDetail() {
               바로 구매하기
             </button>
           </div>
-
-          <div className="product-summary">
-            {[
-              { key: 'fit', title: '핏', content: product.fit },
-              { key: 'shipping', title: '배송', content: '3만원 이상 무료배송 · 영업일 기준 2~3일 이내 출고' },
-              { key: 'material', title: '소재', content: product.material },
-            ].map((section) => {
-              const open = openSections.has(section.key);
-              return (
-                <div key={section.key} className={`accordion-item ${open ? 'open' : ''}`}>
-                  <button
-                    type="button"
-                    className="accordion-header"
-                    aria-expanded={open}
-                    onClick={() => toggleSection(section.key)}
-                  >
-                    <span className="h3">{section.title}</span>
-                    <span className="accordion-icon">
-                      <ChevronIcon />
-                    </span>
-                  </button>
-                  <div className="accordion-body">
-                    <div className="accordion-body-inner">
-                      <p className="text-small accordion-content">{section.content}</p>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
         </div>
       </div>
 
       {product.fullscreen_image_url && (
         <img className="product-fullscreen" src={assetUrl(product.fullscreen_image_url)} alt={`${product.name} 착용컷`} />
       )}
+
+      <div className="container product-summary">
+        {[
+          { key: 'fit', title: '핏', content: product.fit },
+          { key: 'shipping', title: '배송', content: '3만원 이상 무료배송 · 영업일 기준 2~3일 이내 출고' },
+          { key: 'material', title: '소재', content: product.material },
+        ].map((section) => {
+          const open = openSections.has(section.key);
+          return (
+            <div key={section.key} className={`accordion-item ${open ? 'open' : ''}`}>
+              <button
+                type="button"
+                className="accordion-header"
+                aria-expanded={open}
+                onClick={() => toggleSection(section.key)}
+              >
+                <span className="h3">{section.title}</span>
+                <span className="accordion-icon">
+                  <ChevronIcon />
+                </span>
+              </button>
+              <div className="accordion-body">
+                <div className="accordion-body-inner">
+                  <p className="text-small accordion-content">{section.content}</p>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
 
       <div className="container product-description">
         <h2 className="h2">제품 설명</h2>

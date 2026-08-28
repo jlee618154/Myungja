@@ -6,9 +6,9 @@
 }
 
 .carousel-hero {
-  height: 85vh;
-  min-height: 480px;
-  max-height: 760px;
+  height: 88vh;
+  min-height: 560px;
+  max-height: 960px;
 }
 
 .carousel-gallery {

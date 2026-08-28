@@ -82,7 +82,7 @@
 }
 
 .product-summary {
-  margin-top: var(--space-5);
+  padding: var(--space-7) var(--container-pad);
   border-top: 1px solid var(--color-border);
 }
 

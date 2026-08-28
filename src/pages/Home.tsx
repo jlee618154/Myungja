@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom';
 import Carousel from '../components/Carousel';
 import { assetUrl } from '../lib/format';
+import { useReveal } from '../hooks/useReveal';
 import './Home.css';
 
 const HERO_SLIDES = [
-  { src: assetUrl('images/hero-1.png'), alt: 'MYUNGJA 소프트 저지 레깅스 착장', objectPosition: 'center top' },
-  { src: assetUrl('images/hero-2.jpg'), alt: 'MYUNGJA 등산 라이프스타일', objectPosition: 'center top' },
-  { src: assetUrl('images/hero-3.png'), alt: 'MYUNGJA 마라톤 라이프스타일', objectPosition: 'center top' },
+  { src: assetUrl('images/hero-1.png'), alt: 'MYUNGJA 소프트 저지 레깅스 착장', objectPosition: 'center 5%' },
+  { src: assetUrl('images/hero-2.jpg'), alt: 'MYUNGJA 등산 라이프스타일', objectPosition: 'center 10%' },
+  { src: assetUrl('images/hero-3.png'), alt: 'MYUNGJA 마라톤 라이프스타일', objectPosition: 'center 4%' },
 ];
 
 const MD_PICKS = [
@@ -34,26 +35,18 @@ const MD_PICKS = [
 ];
 
 export default function Home() {
+  const aboutReveal = useReveal<HTMLElement>();
+  const mdPickReveal = useReveal<HTMLElement>();
+
   return (
     <div>
-      <Carousel slides={HERO_SLIDES} />
+      <Carousel slides={HERO_SLIDES} intervalMs={2000} />
 
-      <section className="md-pick container">
-        <h2 className="h2 en-label md-pick-title">MD PICK</h2>
-        <div className="md-pick-grid">
-          {MD_PICKS.map((m) => (
-            <Link key={m.key} to={m.to} className="md-pick-card">
-              <img src={m.image} alt={m.title} />
-              <div className="md-pick-card-overlay">
-                <h3 className="h3">{m.title}</h3>
-                <p className="text-small">{m.copy}</p>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      <section id="about-myungja" className="about-section">
+      <section
+        id="about-myungja"
+        ref={aboutReveal.ref}
+        className={`about-section reveal ${aboutReveal.visible ? 'reveal-visible' : ''}`}
+      >
         <div className="container about-inner">
           <p className="about-eyebrow en-label">ABOUT MYUNGJA</p>
           <p className="about-quote h1">
@@ -72,6 +65,24 @@ export default function Home() {
               움직임을 위한 옷을 제안합니다.
             </p>
           </div>
+        </div>
+      </section>
+
+      <section
+        ref={mdPickReveal.ref}
+        className={`md-pick container reveal ${mdPickReveal.visible ? 'reveal-visible' : ''}`}
+      >
+        <h2 className="h2 en-label md-pick-title">MD PICK</h2>
+        <div className="md-pick-grid">
+          {MD_PICKS.map((m) => (
+            <Link key={m.key} to={m.to} className="md-pick-card">
+              <img src={m.image} alt={m.title} />
+              <div className="md-pick-card-overlay">
+                <h3 className="h3">{m.title}</h3>
+                <p className="text-small">{m.copy}</p>
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
     </div>

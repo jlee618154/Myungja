@@ -41,6 +41,10 @@ button, input, select, textarea {
   outline-offset: 2px;
 }
 
+.main-with-header-offset {
+  padding-top: 88px;
+}
+
 .container {
   max-width: var(--container-max);
   margin: 0 auto;

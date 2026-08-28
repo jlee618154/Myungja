@@ -1,3 +1,14 @@
+.reveal {
+  opacity: 0;
+  transform: translateY(48px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .md-pick {
   padding: var(--space-9) var(--container-pad) 96px;
 }

@@ -1,5 +1,5 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useCart } from '../contexts/CartContext';
 import { assetUrl } from '../lib/format';
@@ -61,7 +61,25 @@ export default function Header() {
   const { user } = useAuth();
   const { totalCount } = useCart();
   const [searchOpen, setSearchOpen] = useState(false);
+  const [activeNav, setActiveNav] = useState<string | null>(null);
+  const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const isHome = location.pathname === '/';
+  const headerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 50);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const opaque = scrolled || !isHome;
+
+  useEffect(() => {
+    setActiveNav(null);
+  }, [location.pathname]);
 
   const goAbout = () => {
     navigate('/');
@@ -70,9 +88,20 @@ export default function Header() {
     });
   };
 
+  const closeIfFocusLeft = (e: React.FocusEvent) => {
+    if (!headerRef.current?.contains(e.relatedTarget as Node)) {
+      setActiveNav(null);
+    }
+  };
+
   return (
-    <header className="site-header">
-      <div className="site-header-inner container">
+    <header
+      ref={headerRef}
+      className={`site-header ${opaque ? 'scrolled' : ''}`}
+      onMouseLeave={() => setActiveNav(null)}
+      onBlur={closeIfFocusLeft}
+    >
+      <div className="site-header-inner">
         <Link to="/" className="logo en-label">
           MYUNGJA
         </Link>
@@ -80,20 +109,27 @@ export default function Header() {
         <nav className="main-nav" aria-label="주요 메뉴">
           <ul>
             {NAV.map((item) => (
-              <li key={item.label} className="nav-item" tabIndex={0}>
-                <Link to={item.to} className="nav-link link-hover">
+              <li
+                key={item.label}
+                className="nav-item"
+                onMouseEnter={() => setActiveNav(item.label)}
+              >
+                <Link
+                  to={item.to}
+                  className="nav-link link-hover"
+                  onFocus={() => setActiveNav(item.label)}
+                >
                   {item.label}
                 </Link>
-                <div className="nav-dropdown">
-                  <Link to={item.subTo} className="nav-dropdown-card">
-                    <img src={assetUrl(item.image)} alt={item.sub} />
-                    <span className="nav-dropdown-link link-hover">{item.sub}</span>
-                  </Link>
-                </div>
               </li>
             ))}
-            <li className="nav-item">
-              <button type="button" className="nav-link link-hover nav-link-btn" onClick={goAbout}>
+            <li className="nav-item" onMouseEnter={() => setActiveNav(null)}>
+              <button
+                type="button"
+                className="nav-link link-hover nav-link-btn"
+                onFocus={() => setActiveNav(null)}
+                onClick={goAbout}
+              >
                 ABOUT
               </button>
             </li>
@@ -125,6 +161,22 @@ export default function Header() {
             </span>
             <span className="icon-btn-label">BAG</span>
           </Link>
+        </div>
+      </div>
+
+      <div className={`nav-submenu-bar ${activeNav ? 'open' : ''}`}>
+        <div className="nav-submenu-inner">
+          {NAV.map((item) => (
+            <div
+              key={item.label}
+              className={`nav-submenu-panel ${activeNav === item.label ? 'visible' : ''}`}
+            >
+              <Link to={item.subTo} className="nav-submenu-link link-hover">
+                <img src={assetUrl(item.image)} alt={item.sub} />
+                <span>{item.sub}</span>
+              </Link>
+            </div>
+          ))}
         </div>
       </div>
 
