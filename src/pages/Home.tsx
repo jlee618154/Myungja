@@ -4,9 +4,9 @@ import { assetUrl } from '../lib/format';
 import './Home.css';
 
 const HERO_SLIDES = [
-  { src: assetUrl('images/hero-hiking.png'), alt: 'MYUNGJA 등산 라이프스타일', objectPosition: 'center top' },
-  { src: assetUrl('images/hero-marathon.png'), alt: 'MYUNGJA 마라톤 라이프스타일', objectPosition: 'center top' },
-  { src: assetUrl('images/hero-yoga.png'), alt: 'MYUNGJA 요가 라이프스타일', objectPosition: 'center top' },
+  { src: assetUrl('images/hero-hiking.png'), alt: 'MYUNGJA 등산 라이프스타일', objectPosition: 'center center' },
+  { src: assetUrl('images/hero-marathon.png'), alt: 'MYUNGJA 마라톤 라이프스타일', objectPosition: 'center center' },
+  { src: assetUrl('images/hero-yoga.png'), alt: 'MYUNGJA 요가 라이프스타일', objectPosition: 'center center' },
 ];
 
 const MD_PICKS = [
