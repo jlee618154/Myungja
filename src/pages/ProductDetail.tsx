@@ -106,7 +106,7 @@ export default function ProductDetail() {
 
   const maxQty = selectedOption ? Math.min(selectedOption.stock_qty, 10) : 10;
 
-  const handleAdd = async (goCheckout: boolean) => {
+  const handleAdd = async (goCheckout: boolean, presetPaymentMethod?: string) => {
     if (!color) {
       setMessage('색상을 선택해 주세요');
       return;
@@ -137,7 +137,7 @@ export default function ProductDetail() {
       return;
     }
     if (goCheckout) {
-      navigate('/checkout');
+      navigate('/checkout', presetPaymentMethod ? { state: { presetPaymentMethod } } : undefined);
     } else {
       setMessage('장바구니에 담았습니다');
     }
@@ -200,6 +200,27 @@ export default function ProductDetail() {
             </button>
             <button type="button" className="btn btn-primary" onClick={() => handleAdd(true)}>
               바로 구매하기
+            </button>
+          </div>
+
+          {/* TODO: 카카오페이/네이버페이 가맹점 계약 완료 후 실제 SDK 연동 필요
+              - 카카오페이: Kakao Pay API로 교체
+              - 네이버페이: 네이버페이 개발자센터 SDK로 교체
+              현재는 테스트 모드로, 주문서 페이지에서 모의결제 확인만 거치고 바로 주문 완료 처리됨 */}
+          <div className="product-actions product-actions-pay">
+            <button
+              type="button"
+              className="btn btn-kakaopay"
+              onClick={() => handleAdd(true, '카카오페이')}
+            >
+              카카오페이 구매
+            </button>
+            <button
+              type="button"
+              className="btn btn-naverpay"
+              onClick={() => handleAdd(true, '네이버페이')}
+            >
+              네이버페이 구매
             </button>
           </div>
         </div>

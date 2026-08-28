@@ -8,7 +8,8 @@ import AddressFields, { AddressValue } from '../components/AddressFields';
 import type { Address, UserCoupon } from '../types';
 import './Checkout.css';
 
-const PAYMENT_METHODS = ['신용카드/체크카드', '간편결제', '계좌이체', '가상계좌', '휴대전화 결제'];
+const PAYMENT_METHODS = ['신용카드/체크카드', '간편결제', '카카오페이', '네이버페이', '계좌이체', '가상계좌', '휴대전화 결제'];
+const MOCK_PAYMENT_METHODS = ['카카오페이', '네이버페이'];
 
 const emptyAddress: AddressValue = { recipient_name: '', phone: '', zonecode: '', address1: '', address2: '' };
 
@@ -39,11 +40,13 @@ export default function Checkout() {
   const [couponId, setCouponId] = useState<string>('');
   const [pointsBalance, setPointsBalance] = useState(0);
   const [pointsToUse, setPointsToUse] = useState(0);
-  const [paymentMethod, setPaymentMethod] = useState(PAYMENT_METHODS[0]);
+  const presetPaymentMethod: string | undefined = (location.state as any)?.presetPaymentMethod;
+  const [paymentMethod, setPaymentMethod] = useState(presetPaymentMethod ?? PAYMENT_METHODS[0]);
   const [agree, setAgree] = useState(false);
 
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showMockPayModal, setShowMockPayModal] = useState(false);
 
   useEffect(() => {
     if (profile) {
@@ -147,6 +150,18 @@ export default function Checkout() {
   const submit = async (e: FormEvent) => {
     e.preventDefault();
     if (!canSubmit) return;
+    // TODO: 카카오페이/네이버페이 가맹점 계약 완료 후 실제 SDK 연동 필요
+    // - 카카오페이: Kakao Pay API로 교체 (결제창 호출 → 승인 콜백 처리)
+    // - 네이버페이: 네이버페이 개발자센터 SDK로 교체
+    // 지금은 실제 결제창 대신 모의결제 확인 모달만 띄우고, 확인 시 아래 placeOrder를 바로 호출한다.
+    if (MOCK_PAYMENT_METHODS.includes(paymentMethod)) {
+      setShowMockPayModal(true);
+      return;
+    }
+    await placeOrder();
+  };
+
+  const placeOrder = async () => {
     setSubmitting(true);
     setError(null);
     const { data, error: err } = await supabase.rpc('checkout_create_order', {
@@ -190,6 +205,7 @@ export default function Checkout() {
   }
 
   return (
+    <>
     <form className="container checkout-page" onSubmit={submit}>
       <div className="checkout-main">
         <h1 className="h1">주문/결제</h1>
@@ -342,5 +358,36 @@ export default function Checkout() {
         </button>
       </aside>
     </form>
+
+    {showMockPayModal && (
+      <div className="modal-overlay" role="dialog" aria-modal="true" aria-label={`${paymentMethod} 모의결제`}>
+        <div className="mock-pay-modal card">
+          <p className={`mock-pay-badge ${paymentMethod === '카카오페이' ? 'mock-pay-badge-kakao' : 'mock-pay-badge-naver'}`}>
+            {paymentMethod}
+          </p>
+          <p className="h3">모의결제(테스트) 모드입니다</p>
+          <p className="text-small mock-pay-desc">
+            실제 결제가 이루어지지 않으며, 확인을 누르면 바로 주문이 완료 처리됩니다.
+          </p>
+          <div className="mock-pay-actions">
+            <button type="button" className="btn btn-secondary" onClick={() => setShowMockPayModal(false)}>
+              취소
+            </button>
+            <button
+              type="button"
+              className="btn btn-primary"
+              disabled={submitting}
+              onClick={async () => {
+                await placeOrder();
+                setShowMockPayModal(false);
+              }}
+            >
+              {submitting ? '처리 중...' : '확인'}
+            </button>
+          </div>
+        </div>
+      </div>
+    )}
+    </>
   );
 }
