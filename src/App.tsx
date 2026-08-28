@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import InquiryPopup from './components/InquiryPopup';
@@ -31,13 +31,10 @@ import ShippingReturn from './pages/policy/ShippingReturn';
 import Faq from './pages/policy/Faq';
 
 export default function App() {
-  const location = useLocation();
-  const isHome = location.pathname === '/';
-
   return (
     <div className="app-shell">
       <Header />
-      <main className={isHome ? '' : 'main-with-header-offset'}>
+      <main className="main-with-header-offset">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/top" element={<CategoryPage category="TOP" />} />

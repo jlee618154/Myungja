@@ -1,1 +1,0 @@
-export const HERO_SCROLL_DISTANCE = 300;

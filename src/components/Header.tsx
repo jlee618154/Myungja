@@ -3,23 +3,8 @@ import { useEffect, useRef, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useCart } from '../contexts/CartContext';
 import { assetUrl } from '../lib/format';
-import { useScrollProgress } from '../hooks/useScrollProgress';
-import { HERO_SCROLL_DISTANCE } from '../lib/constants';
 import SearchOverlay from './SearchOverlay';
 import './Header.css';
-
-const WHITE: [number, number, number] = [255, 255, 255];
-const DARK_BROWN: [number, number, number] = [59, 44, 34];
-const BORDER: [number, number, number] = [220, 212, 200];
-const IVORY: [number, number, number] = [247, 243, 236];
-
-function lerp(from: number, to: number, t: number) {
-  return Math.round(from + (to - from) * t);
-}
-
-function lerpRgb(from: [number, number, number], to: [number, number, number], t: number) {
-  return `rgb(${lerp(from[0], to[0], t)}, ${lerp(from[1], to[1], t)}, ${lerp(from[2], to[2], t)})`;
-}
 
 function SearchIcon() {
   return (
@@ -79,18 +64,7 @@ export default function Header() {
   const [activeNav, setActiveNav] = useState<string | null>(null);
   const navigate = useNavigate();
   const location = useLocation();
-  const isHome = location.pathname === '/';
   const headerRef = useRef<HTMLElement>(null);
-
-  const scrollProgress = useScrollProgress(HERO_SCROLL_DISTANCE, isHome);
-
-  const headerStyle = isHome
-    ? {
-        backgroundColor: `rgba(${IVORY.join(', ')}, ${(scrollProgress * 0.85).toFixed(3)})`,
-        color: lerpRgb(WHITE, DARK_BROWN, scrollProgress),
-        borderBottomColor: `rgba(${BORDER.join(', ')}, ${scrollProgress.toFixed(3)})`,
-      }
-    : undefined;
 
   useEffect(() => {
     setActiveNav(null);
@@ -112,8 +86,7 @@ export default function Header() {
   return (
     <header
       ref={headerRef}
-      className={`site-header ${!isHome ? 'scrolled' : ''}`}
-      style={headerStyle}
+      className="site-header"
       onMouseLeave={() => setActiveNav(null)}
       onBlur={closeIfFocusLeft}
     >

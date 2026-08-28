@@ -1,7 +1,15 @@
-.hero-shrink {
-  position: relative;
+.home-hero-fixed {
+  position: fixed;
+  top: 88px;
+  left: 0;
   width: 100%;
+  height: 500px;
+  z-index: 150;
   overflow: hidden;
+}
+
+.home-scroll-start {
+  margin-top: 500px;
 }
 
 .reveal {

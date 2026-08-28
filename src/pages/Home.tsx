@@ -2,17 +2,12 @@ import { Link } from 'react-router-dom';
 import Carousel from '../components/Carousel';
 import { assetUrl } from '../lib/format';
 import { useReveal } from '../hooks/useReveal';
-import { useScrollProgress } from '../hooks/useScrollProgress';
-import { HERO_SCROLL_DISTANCE } from '../lib/constants';
 import './Home.css';
 
-const HERO_MAX_VH = 90;
-const HERO_MIN_VH = 40;
-
 const HERO_SLIDES = [
-  { src: assetUrl('images/hero-walk.png'), alt: 'MYUNGJA 데일리 워크 착장', objectPosition: 'center 3%' },
-  { src: assetUrl('images/hero-studio.png'), alt: 'MYUNGJA 스튜디오 착장', objectPosition: 'center 10%' },
-  { src: assetUrl('images/hero-meditation.png'), alt: 'MYUNGJA 명상/요가 라이프스타일', objectPosition: 'center 8%' },
+  { src: assetUrl('images/hero-walk.png'), alt: 'MYUNGJA 데일리 워크 착장', objectPosition: 'center 4%' },
+  { src: assetUrl('images/hero-studio.png'), alt: 'MYUNGJA 스튜디오 착장', objectPosition: 'center 8%' },
+  { src: assetUrl('images/hero-meditation.png'), alt: 'MYUNGJA 명상/요가 라이프스타일', objectPosition: 'center 10%' },
 ];
 
 const MD_PICKS = [
@@ -42,19 +37,17 @@ const MD_PICKS = [
 export default function Home() {
   const aboutReveal = useReveal<HTMLElement>();
   const mdPickReveal = useReveal<HTMLElement>();
-  const heroProgress = useScrollProgress(HERO_SCROLL_DISTANCE);
-  const heroVh = HERO_MAX_VH - heroProgress * (HERO_MAX_VH - HERO_MIN_VH);
 
   return (
     <div>
-      <div className="hero-shrink" style={{ height: `max(${heroVh}vh, 320px)` }}>
+      <div className="home-hero-fixed">
         <Carousel slides={HERO_SLIDES} intervalMs={2000} />
       </div>
 
       <section
         id="about-myungja"
         ref={aboutReveal.ref}
-        className={`about-section reveal ${aboutReveal.visible ? 'reveal-visible' : ''}`}
+        className={`about-section home-scroll-start reveal ${aboutReveal.visible ? 'reveal-visible' : ''}`}
       >
         <div className="container about-inner">
           <p className="about-eyebrow en-label">ABOUT MYUNGJA</p>

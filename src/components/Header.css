@@ -4,15 +4,8 @@
   left: 0;
   width: 100%;
   z-index: 200;
-  background: transparent;
-  border-bottom: 1px solid transparent;
-  color: #FFFFFF;
-  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
-}
-
-.site-header.scrolled {
   background: var(--color-ivory);
-  border-bottom-color: var(--color-border);
+  border-bottom: 1px solid var(--color-border);
   color: var(--color-dark-brown);
 }
 
