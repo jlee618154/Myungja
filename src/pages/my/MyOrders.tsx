@@ -3,6 +3,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../lib/supabase';
 import { formatDate, formatKrw } from '../../lib/format';
 import type { Order, OrderItem } from '../../types';
+import OrderStatusSteps from '../../components/OrderStatusSteps';
 
 interface OrderWithItems extends Order {
   order_items: OrderItem[];
@@ -43,6 +44,7 @@ export default function MyOrders() {
                 {o.status}
               </span>
             </div>
+            <OrderStatusSteps status={o.status} />
             {o.order_items.map((it) => (
               <div key={it.id} style={{ display: 'flex', justifyContent: 'space-between', padding: '4px 0' }}>
                 <span>

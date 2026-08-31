@@ -1,0 +1,68 @@
+.order-steps {
+  width: 100%;
+  margin-bottom: var(--space-5);
+}
+
+.order-steps-track {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.order-steps-segment {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.order-steps-segment:last-child {
+  flex: 0 0 auto;
+}
+
+.order-step-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--color-border);
+  flex-shrink: 0;
+}
+
+.order-step-dot.active {
+  background: var(--color-dark-brown);
+}
+
+.order-step-connector {
+  flex: 1;
+  height: 2px;
+  background: var(--color-border);
+  margin: 0 var(--space-2);
+}
+
+.order-step-connector.active {
+  background: var(--color-dark-brown);
+}
+
+.order-steps-labels {
+  display: flex;
+  margin-top: var(--space-2);
+}
+
+.order-steps-labels span {
+  flex: 1;
+  text-align: center;
+  font-size: var(--fs-small);
+  color: var(--color-gray-brown);
+}
+
+.order-steps-labels span:first-child {
+  text-align: left;
+}
+
+.order-steps-labels span:last-child {
+  text-align: right;
+}
+
+.order-steps-labels span.active {
+  color: var(--color-dark-brown);
+  font-weight: 600;
+}
