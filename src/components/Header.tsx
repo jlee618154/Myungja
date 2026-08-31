@@ -69,6 +69,7 @@ export default function Header() {
     supabase
       .from('products')
       .select('slug, name, category, base_image_url')
+      .eq('is_active', true)
       .order('created_at', { ascending: true })
       .then(({ data }) => {
         const grouped: Record<Category, NavProduct[]> = { TOP: [], BOTTOM: [], OUTER: [] };

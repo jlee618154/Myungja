@@ -1,0 +1,64 @@
+.admin-shell {
+  display: flex;
+  min-width: 1440px;
+  min-height: 100vh;
+  background: var(--color-ivory);
+}
+
+.admin-sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  background: var(--color-dark-brown);
+  color: var(--color-ivory);
+  padding: var(--space-6) var(--space-5);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.admin-logo {
+  font-size: var(--fs-logo);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.admin-logo-sub {
+  font-size: var(--fs-small);
+  color: var(--color-gray-brown);
+  margin-top: var(--space-1);
+  margin-bottom: var(--space-7);
+}
+
+.admin-nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.admin-nav-link {
+  display: block;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-button);
+  color: var(--color-ivory);
+  opacity: 0.75;
+  font-size: var(--fs-body);
+  transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+
+.admin-nav-link:hover {
+  opacity: 1;
+  background: rgba(247, 243, 236, 0.08);
+}
+
+.admin-nav-link.active {
+  opacity: 1;
+  background: var(--color-orange);
+  color: var(--color-dark-brown);
+  font-weight: 600;
+}
+
+.admin-main {
+  flex: 1;
+  padding: var(--space-6) var(--space-7);
+  width: 1200px;
+}

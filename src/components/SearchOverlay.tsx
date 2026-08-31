@@ -26,7 +26,7 @@ export default function SearchOverlay({ onClose }: { onClose: () => void }) {
       return;
     }
     const timer = setTimeout(async () => {
-      const { data } = await supabase.from('products').select('*').ilike('name', `%${q.trim()}%`);
+      const { data } = await supabase.from('products').select('*').eq('is_active', true).ilike('name', `%${q.trim()}%`);
       setResults((data as Product[]) ?? []);
       setSearched(true);
     }, 200);

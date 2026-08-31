@@ -3,6 +3,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import InquiryPopup from './components/InquiryPopup';
 import ProtectedRoute from './components/ProtectedRoute';
+import AdminRoute from './components/AdminRoute';
 
 import Home from './pages/Home';
 import CategoryPage from './pages/CategoryPage';
@@ -31,7 +32,13 @@ import Privacy from './pages/policy/Privacy';
 import ShippingReturn from './pages/policy/ShippingReturn';
 import Faq from './pages/policy/Faq';
 
-export default function App() {
+import AdminLayout from './pages/admin/AdminLayout';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminOrders from './pages/admin/AdminOrders';
+import AdminProducts from './pages/admin/AdminProducts';
+import AdminAnalytics from './pages/admin/AdminAnalytics';
+
+function Storefront() {
   return (
     <div className="app-shell">
       <Header />
@@ -88,5 +95,26 @@ export default function App() {
       <Footer />
       <InquiryPopup />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <Routes>
+      <Route
+        path="/admin"
+        element={
+          <AdminRoute>
+            <AdminLayout />
+          </AdminRoute>
+        }
+      >
+        <Route index element={<AdminDashboard />} />
+        <Route path="orders" element={<AdminOrders />} />
+        <Route path="products" element={<AdminProducts />} />
+        <Route path="analytics" element={<AdminAnalytics />} />
+      </Route>
+      <Route path="/*" element={<Storefront />} />
+    </Routes>
   );
 }

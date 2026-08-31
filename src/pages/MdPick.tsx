@@ -18,6 +18,7 @@ export default function MdPick() {
     supabase
       .from('products')
       .select('*')
+      .eq('is_active', true)
       .in('slug', slugs)
       .then(({ data }) => {
         const map: Record<string, Product> = {};

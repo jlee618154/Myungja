@@ -20,6 +20,7 @@ export default function CategoryPage({ category }: { category: Category }) {
       .from('products')
       .select('*')
       .eq('category', category)
+      .eq('is_active', true)
       .order('created_at', { ascending: false })
       .then(({ data }) => {
         setProducts((data as Product[]) ?? []);

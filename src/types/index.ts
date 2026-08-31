@@ -19,6 +19,8 @@ export interface Product {
   fullscreen_image_url: string | null;
   rating: number;
   review_count: number;
+  is_active: boolean;
+  created_at: string;
 }
 
 export interface ProductOption {
@@ -77,10 +79,14 @@ export interface Review {
   created_at: string;
 }
 
+export const ORDER_STATUSES = ['결제완료', '상품준비중', '배송중', '배송완료'] as const;
+export type OrderStatus = (typeof ORDER_STATUSES)[number] | '취소';
+
 export interface Order {
   id: string;
   order_no: string;
   status: string;
+  user_id: string;
   recipient_name: string;
   recipient_phone: string;
   zonecode: string;
@@ -92,6 +98,7 @@ export interface Order {
   points_used: number;
   total_amount: number;
   payment_method: string;
+  tracking_number: string | null;
   created_at: string;
 }
 
@@ -113,6 +120,7 @@ export interface Profile {
   birth_date: string | null;
   gender: string | null;
   membership_grade: string;
+  is_admin: boolean;
 }
 
 export interface UserCoupon {
