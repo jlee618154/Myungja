@@ -96,7 +96,7 @@ export default function Header() {
   return (
     <header
       ref={headerRef}
-      className="site-header"
+      className={`site-header ${location.pathname === '/' ? 'site-header-overlay' : ''}`}
       onMouseLeave={() => setActiveNav(null)}
       onBlur={closeIfFocusLeft}
     >

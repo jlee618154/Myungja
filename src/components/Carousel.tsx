@@ -11,10 +11,12 @@ export default function Carousel({
   slides,
   intervalMs = 4000,
   heightClass = 'carousel-hero',
+  variant = 'default',
 }: {
   slides: CarouselSlide[];
   intervalMs?: number;
   heightClass?: string;
+  variant?: 'default' | 'hero';
 }) {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -38,6 +40,7 @@ export default function Carousel({
 
   const prev = () => setIndex((i) => (i - 1 + slides.length) % slides.length);
   const next = () => setIndex((i) => (i + 1) % slides.length);
+  const pad = (n: number) => String(n).padStart(2, '0');
 
   return (
     <div
@@ -52,7 +55,28 @@ export default function Carousel({
         </div>
       ))}
 
-      {slides.length > 1 && (
+      {slides.length > 1 && variant === 'hero' && (
+        <>
+          <div className="carousel-counter en-label" aria-hidden="true">
+            <span className="carousel-counter-current">{pad(index + 1)}</span>
+            <span className="carousel-counter-sep">/</span>
+            <span className="carousel-counter-total">{pad(slides.length)}</span>
+          </div>
+          <div className="carousel-bars">
+            {slides.map((s, i) => (
+              <button
+                key={s.src}
+                type="button"
+                className={`carousel-bar ${i === index ? 'active' : ''}`}
+                aria-label={`${i + 1}번째 이미지로 이동`}
+                onClick={() => setIndex(i)}
+              />
+            ))}
+          </div>
+        </>
+      )}
+
+      {slides.length > 1 && variant === 'default' && (
         <>
           <button type="button" className="carousel-arrow carousel-arrow-left" onClick={prev} aria-label="이전 이미지">
             ‹

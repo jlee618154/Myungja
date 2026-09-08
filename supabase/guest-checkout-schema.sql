@@ -90,11 +90,13 @@ begin
 
   insert into orders (
     order_no, status, user_id, is_guest, guest_name, guest_phone, guest_email,
+    orderer_name, orderer_phone,
     recipient_name, recipient_phone, zonecode, address1, address2, delivery_request,
     subtotal, shipping_fee, coupon_discount, points_used, total_amount,
     payment_method, payment_id
   ) values (
     v_order_no, '결제대기', null, true, p_guest_name, p_guest_phone, p_guest_email,
+    p_guest_name, p_guest_phone,
     p_recipient_name, p_recipient_phone, p_zonecode, p_address1, p_address2, p_delivery_request,
     v_subtotal, v_shipping, 0, 0, v_total,
     p_payment_method, v_payment_id

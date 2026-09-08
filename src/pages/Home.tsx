@@ -36,7 +36,9 @@ const MD_PICKS = [
 export default function Home() {
   return (
     <div>
-      <Carousel slides={HERO_SLIDES} intervalMs={2000} />
+      <div className="home-hero">
+        <Carousel slides={HERO_SLIDES} intervalMs={2000} variant="hero" />
+      </div>
 
       <section id="about-myungja" className="about-section">
         <div className="container about-inner">

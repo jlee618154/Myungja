@@ -9,6 +9,12 @@
   color: var(--color-dark-brown);
 }
 
+.site-header-overlay {
+  background: transparent;
+  border-bottom-color: transparent;
+  color: var(--color-ivory);
+}
+
 .site-header-inner {
   width: 100%;
   height: 88px;
