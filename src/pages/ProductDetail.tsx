@@ -191,6 +191,11 @@ export default function ProductDetail() {
               <p className="text-small">해당 색상 이미지를 준비 중입니다</p>
             </div>
           )}
+          {product.category === 'SET' && galleryImages.length > 1 && (
+            <p className="text-small product-gallery-set-hint">
+              ‹ › 화살표를 눌러 세트에 포함된 상품 사진을 모두 확인해 보세요 (총 {galleryImages.length}장)
+            </p>
+          )}
         </div>
 
         <div className="product-info">

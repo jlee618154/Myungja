@@ -22,6 +22,12 @@
   padding: var(--space-6);
 }
 
+.product-gallery-set-hint {
+  margin-top: var(--space-3);
+  text-align: center;
+  color: var(--color-gray-brown);
+}
+
 .product-info {
   display: flex;
   flex-direction: column;
