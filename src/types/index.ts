@@ -80,13 +80,18 @@ export interface Review {
 }
 
 export const ORDER_STATUSES = ['결제완료', '상품준비중', '배송중', '배송완료'] as const;
-export type OrderStatus = (typeof ORDER_STATUSES)[number] | '취소';
+export type OrderStatus = (typeof ORDER_STATUSES)[number] | '취소' | '결제대기';
 
 export interface Order {
   id: string;
   order_no: string;
   status: string;
-  user_id: string;
+  user_id: string | null;
+  is_guest?: boolean;
+  guest_name?: string | null;
+  guest_phone?: string | null;
+  guest_email?: string | null;
+  payment_id?: string | null;
   recipient_name: string;
   recipient_phone: string;
   zonecode: string;

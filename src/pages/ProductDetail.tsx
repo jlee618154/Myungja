@@ -144,6 +144,38 @@ export default function ProductDetail() {
     }
   };
 
+  // 카카오페이/네이버페이 버튼 전용: 로그인 여부와 무관하게 비회원 결제 페이지로 바로 이동한다.
+  // (장바구니에 담지 않고, 이 상품 1건만 즉시 결제하는 흐름)
+  const handleGuestPay = (method: '카카오페이' | '네이버페이') => {
+    if (!color) {
+      setMessage('색상을 선택해 주세요');
+      return;
+    }
+    if (!size) {
+      setMessage('사이즈를 선택해 주세요');
+      return;
+    }
+    if (!selectedOption || selectedOption.stock_qty < qty) {
+      setMessage('선택하신 옵션의 재고가 부족합니다');
+      return;
+    }
+    const image = galleryImages[0]?.image_url ?? product.base_image_url;
+    navigate('/pay/guest', {
+      state: {
+        presetPaymentMethod: method,
+        item: {
+          product_id: product.id,
+          color_name: color,
+          size,
+          qty,
+          name: product.name,
+          price: product.price,
+          image_url: image,
+        },
+      },
+    });
+  };
+
   return (
     <div className="product-detail">
       <div className="container product-detail-top">
@@ -204,24 +236,22 @@ export default function ProductDetail() {
             </button>
           </div>
 
-          {/* TODO: 카카오페이/네이버페이 가맹점 계약 완료 후 실제 SDK 연동 필요
-              - 카카오페이: Kakao Pay API로 교체
-              - 네이버페이: 네이버페이 개발자센터 SDK로 교체
-              현재는 테스트 모드로, 주문서 페이지에서 모의결제 확인만 거치고 바로 주문 완료 처리됨 */}
+          {/* 회원가입/로그인 없이 바로 결제되는 PortOne(포트원) 간편결제 버튼.
+              PDP 상단의 "바로 구매하기"(회원 전용, 장바구니 경유)와는 별개의 비회원 즉시결제 흐름이다. */}
           <div className="product-actions product-actions-pay">
             <button
               type="button"
               className="btn btn-kakaopay"
-              onClick={() => handleAdd(true, '카카오페이')}
+              onClick={() => handleGuestPay('카카오페이')}
             >
-              카카오페이 구매
+              카카오페이로 결제
             </button>
             <button
               type="button"
               className="btn btn-naverpay"
-              onClick={() => handleAdd(true, '네이버페이')}
+              onClick={() => handleGuestPay('네이버페이')}
             >
-              네이버페이 구매
+              네이버페이로 결제
             </button>
           </div>
         </div>

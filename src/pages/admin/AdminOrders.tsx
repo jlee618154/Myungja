@@ -10,7 +10,7 @@ interface OrderWithItems extends Order {
   order_items: OrderItem[];
 }
 
-const ALL_STATUSES = [...ORDER_STATUSES, '취소'];
+const ALL_STATUSES = ['결제대기', ...ORDER_STATUSES, '취소'];
 
 export default function AdminOrders() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -118,13 +118,16 @@ export default function AdminOrders() {
           </thead>
           <tbody>
             {filtered.map((o) => {
-              const showTracking = o.status !== '결제완료' && o.status !== '취소';
+              const showTracking = o.status !== '결제완료' && o.status !== '취소' && o.status !== '결제대기';
               const trackingValue = trackingDrafts[o.id] ?? o.tracking_number ?? '';
               return (
                 <tr key={o.id}>
                   <td>{o.order_no}</td>
                   <td>{formatDate(o.created_at)}</td>
-                  <td>{o.recipient_name}</td>
+                  <td>
+                    {o.recipient_name}
+                    {o.is_guest && <span className="text-small"> (비회원)</span>}
+                  </td>
                   <td>
                     {o.order_items[0]?.product_name}
                     {o.order_items.length > 1 ? ` 외 ${o.order_items.length - 1}건` : ''}

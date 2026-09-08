@@ -1,0 +1,40 @@
+.guest-pay-page {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: var(--space-8);
+  padding: var(--space-8) var(--container-pad) var(--space-9);
+  align-items: start;
+}
+
+.guest-pay-lead {
+  color: var(--color-gray-brown);
+  margin-bottom: var(--space-4);
+}
+
+.guest-pay-empty {
+  padding: var(--space-9) var(--container-pad);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.guest-pay-back {
+  background: none;
+  border: none;
+  text-decoration: underline;
+  cursor: pointer;
+  color: var(--color-gray-brown);
+  padding: 0;
+  margin-top: var(--space-2);
+}
+
+.guest-pay-redirect {
+  padding: var(--space-9) var(--container-pad);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  align-items: center;
+}

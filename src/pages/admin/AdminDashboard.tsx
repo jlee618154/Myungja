@@ -75,7 +75,7 @@ export default function AdminDashboard() {
   const weekStart = startOfWeek(now);
   const monthStart = startOfMonth(now);
 
-  const paidOrders = orders.filter((o) => o.status !== '취소');
+  const paidOrders = orders.filter((o) => o.status !== '취소' && o.status !== '결제대기');
   const sumSince = (since: Date) =>
     paidOrders
       .filter((o) => new Date(o.created_at) >= since)

@@ -11,6 +11,8 @@ import ProductDetail from './pages/ProductDetail';
 import MdPick from './pages/MdPick';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
+import GuestPay from './pages/GuestPay';
+import GuestPayRedirect from './pages/GuestPayRedirect';
 import OrderComplete from './pages/OrderComplete';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -60,6 +62,8 @@ function Storefront() {
               </ProtectedRoute>
             }
           />
+          <Route path="/pay/guest" element={<GuestPay />} />
+          <Route path="/pay/guest/redirect" element={<GuestPayRedirect />} />
           <Route path="/order-complete/:orderNo" element={<OrderComplete />} />
 
           <Route path="/login" element={<Login />} />

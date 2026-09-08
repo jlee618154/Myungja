@@ -46,12 +46,14 @@ export default function AdminAnalytics() {
 
   useEffect(() => {
     Promise.all([
-      supabase.from('orders').select('*').neq('status', '취소'),
+      supabase.from('orders').select('*').not('status', 'in', '("취소","결제대기")'),
       supabase.from('order_items').select('*, orders(status)'),
     ]).then(([ordersRes, itemsRes]) => {
       setOrders((ordersRes.data as Order[]) ?? []);
 
-      const items = ((itemsRes.data as any[]) ?? []).filter((it) => it.orders?.status !== '취소');
+      const items = ((itemsRes.data as any[]) ?? []).filter(
+        (it) => it.orders?.status !== '취소' && it.orders?.status !== '결제대기'
+      );
       const totals = new Map<string, { qty: number; revenue: number }>();
       items.forEach((it: OrderItem) => {
         const cur = totals.get(it.product_name) ?? { qty: 0, revenue: 0 };
