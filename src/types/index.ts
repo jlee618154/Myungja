@@ -9,6 +9,7 @@ export interface Product {
   subcategory: string | null;
   name: string;
   price: number;
+  original_price: number | null;
   summary: string | null;
   concept: string | null;
   fit: string | null;

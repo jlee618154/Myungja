@@ -24,6 +24,7 @@ interface EditableProduct {
   subcategory: string;
   name: string;
   price: number;
+  original_price: number | null;
   base_image_url: string;
   is_active: boolean;
   options: EditableOption[];
@@ -35,6 +36,7 @@ const EMPTY_PRODUCT: EditableProduct = {
   subcategory: '',
   name: '',
   price: 0,
+  original_price: null,
   base_image_url: '',
   is_active: true,
   options: [{ color_name: '', color_hex: '#3B2C22', size: 'M', stock_qty: 0 }],
@@ -92,6 +94,7 @@ export default function AdminProducts() {
       subcategory: p.subcategory ?? '',
       name: p.name,
       price: p.price,
+      original_price: p.original_price,
       base_image_url: p.base_image_url,
       is_active: p.is_active,
       options: p.product_options.map((o) => ({
@@ -151,6 +154,7 @@ export default function AdminProducts() {
           subcategory: editing.subcategory || null,
           name: editing.name,
           price: editing.price,
+          original_price: editing.original_price,
           base_image_url: editing.base_image_url,
           is_active: editing.is_active,
         })
@@ -185,6 +189,7 @@ export default function AdminProducts() {
           subcategory: editing.subcategory || null,
           name: editing.name,
           price: editing.price,
+          original_price: editing.original_price,
           base_image_url: editing.base_image_url || 'images/hero-1.png',
           is_active: editing.is_active,
         })
@@ -311,6 +316,18 @@ export default function AdminProducts() {
                 type="number"
                 value={editing.price}
                 onChange={(e) => setEditing((prev) => (prev ? { ...prev, price: Number(e.target.value) } : prev))}
+              />
+            </div>
+            <div className="admin-form-row">
+              <label>정가 (할인 전, 세일 표시용 · 비워두면 정가 없음)</label>
+              <input
+                type="number"
+                value={editing.original_price ?? ''}
+                onChange={(e) =>
+                  setEditing((prev) =>
+                    prev ? { ...prev, original_price: e.target.value === '' ? null : Number(e.target.value) } : prev
+                  )
+                }
               />
             </div>
             <div className="admin-form-row">

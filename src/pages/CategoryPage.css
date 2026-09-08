@@ -2,13 +2,38 @@
   padding: var(--space-8) var(--container-pad) var(--space-9);
 }
 
-.category-title {
+.category-breadcrumb {
+  color: var(--color-gray-brown);
+  margin-bottom: var(--space-5);
   text-align: center;
-  margin-bottom: var(--space-6);
 }
 
-.category-title:has(+ .category-subtitle) {
+.category-breadcrumb a {
+  color: inherit;
+}
+
+.category-breadcrumb a:hover {
+  color: var(--color-orange);
+}
+
+.category-label {
+  text-align: center;
+  color: var(--color-orange);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: 0.2em;
   margin-bottom: var(--space-2);
+}
+
+.category-title {
+  text-align: center;
+  margin-bottom: var(--space-2);
+}
+
+.category-count {
+  text-align: center;
+  color: var(--color-gray-brown);
+  margin-bottom: var(--space-6);
 }
 
 .category-subtitle {
@@ -17,18 +42,51 @@
   margin-bottom: var(--space-6);
 }
 
-.category-sort {
+.category-toolbar {
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: space-between;
   gap: var(--space-4);
-  margin-bottom: var(--space-5);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-6);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
 }
 
-.category-sort button {
+.category-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.category-tab {
   background: none;
-  border: none;
+  border: 1px solid var(--color-border);
+  color: var(--color-dark-brown);
+  border-radius: 999px;
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--fs-small);
   cursor: pointer;
-  color: var(--color-gray-brown);
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.category-tab:hover {
+  border-color: var(--color-dark-brown);
+}
+
+.category-tab.active {
+  background: var(--color-dark-brown);
+  border-color: var(--color-dark-brown);
+  color: var(--color-ivory);
+}
+
+.category-sort-select {
+  border: 1px solid var(--color-border);
+  background: var(--color-ivory);
+  color: var(--color-dark-brown);
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--fs-small);
+  cursor: pointer;
 }
 
 .category-grid {

@@ -55,9 +55,8 @@ const SUBMENU: Record<string, { label: string; to: string }[]> = {
   ],
   TOP: [
     { label: '브라탑', to: '/top?sub=브라탑' },
-    { label: '티셔츠', to: '/top?sub=티셔츠' },
-    { label: '니트', to: '/top?sub=니트' },
-    { label: '후드', to: '/top?sub=후드' },
+    { label: '반팔·민소매', to: '/top?sub=반팔·민소매' },
+    { label: '긴팔·집업', to: '/top?sub=긴팔·집업' },
   ],
   BOTTOM: [
     { label: '레깅스', to: '/bottom?sub=레깅스' },

@@ -1,5 +1,8 @@
 .home-hero {
   margin-top: -88px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 
 .md-pick {
@@ -53,12 +56,28 @@
 }
 
 .about-section {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
   background: var(--color-dark-brown);
   color: var(--color-ivory);
   padding: var(--space-9) 0;
 }
 
+@media (max-width: 768px) {
+  .home-hero {
+    position: static;
+  }
+
+  .about-section {
+    min-height: auto;
+  }
+}
+
 .about-inner {
+  width: 100%;
   text-align: center;
 }
 

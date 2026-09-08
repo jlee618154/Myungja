@@ -66,6 +66,7 @@ const MD_PICKS = [
 export default function Home() {
   return (
     <div>
+      <div className="hero-reveal-wrap">
       <div className="home-hero">
         <Carousel slides={HERO_SLIDES} intervalMs={2000} variant="hero" />
       </div>
@@ -95,6 +96,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      </div>
 
       <section id="md-pick-section" className="md-pick container">
         <h2 className="h2 en-label md-pick-title">MD PICK</h2>
