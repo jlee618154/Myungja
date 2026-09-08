@@ -63,7 +63,7 @@ export default function Carousel({
             alt={s.alt}
             style={
               {
-                objectPosition: s.objectPosition ?? 'center',
+                '--object-position': s.objectPosition ?? 'center',
                 '--mobile-object-position': s.mobileObjectPosition ?? s.objectPosition ?? 'center',
               } as CSSProperties
             }
