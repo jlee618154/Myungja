@@ -23,6 +23,8 @@ export interface Product {
   review_count: number;
   is_active: boolean;
   created_at: string;
+  top_product_id?: string | null;
+  bottom_product_id?: string | null;
 }
 
 export interface ProductOption {
@@ -58,6 +60,11 @@ export interface CartLine {
   image_url: string;
   slug: string;
   stock_qty?: number;
+  // SET 상품 전용: 상의/하의를 각각 독립적으로 선택한 경우 (color_name/size는 표시용 요약값)
+  top_color_name?: string;
+  top_size?: Size;
+  bottom_color_name?: string;
+  bottom_size?: Size;
 }
 
 export interface Address {
@@ -118,6 +125,10 @@ export interface OrderItem {
   size: Size;
   qty: number;
   unit_price: number;
+  top_color_name?: string | null;
+  top_size?: Size | null;
+  bottom_color_name?: string | null;
+  bottom_size?: Size | null;
 }
 
 export interface Profile {

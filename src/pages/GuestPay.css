@@ -41,7 +41,7 @@
 
 @media (max-width: 900px) {
   .guest-pay-page {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     padding: var(--space-6) var(--container-pad) var(--space-8);
     gap: var(--space-6);
   }

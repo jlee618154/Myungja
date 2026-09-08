@@ -36,7 +36,9 @@ const CartContext = createContext<CartContextValue | null>(null);
 async function fetchSupabaseCart(userId: string): Promise<CartLine[]> {
   const { data, error } = await supabase
     .from('cart_items')
-    .select('product_id, color_name, size, qty, products(name, price, slug, base_image_url)')
+    .select(
+      'product_id, color_name, size, qty, top_color_name, top_size, bottom_color_name, bottom_size, products(name, price, slug, base_image_url)'
+    )
     .eq('user_id', userId);
   if (error || !data) return [];
   return data.map((row: any) => ({
@@ -48,6 +50,10 @@ async function fetchSupabaseCart(userId: string): Promise<CartLine[]> {
     price: row.products?.price ?? 0,
     image_url: row.products?.base_image_url ?? '',
     slug: row.products?.slug ?? '',
+    top_color_name: row.top_color_name ?? undefined,
+    top_size: row.top_size ?? undefined,
+    bottom_color_name: row.bottom_color_name ?? undefined,
+    bottom_size: row.bottom_size ?? undefined,
   }));
 }
 
@@ -127,6 +133,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
           color_name: line.color_name,
           size: line.size,
           qty,
+          top_color_name: line.top_color_name ?? null,
+          top_size: line.top_size ?? null,
+          bottom_color_name: line.bottom_color_name ?? null,
+          bottom_size: line.bottom_size ?? null,
         });
         if (error) return { error: error.message };
       }

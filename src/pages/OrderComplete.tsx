@@ -38,7 +38,13 @@ export default function OrderComplete() {
         <h2 className="h3">주문 상품</h2>
         {items.map((it) => (
           <div key={it.id} className="order-complete-item">
-            <span>{it.product_name} ({it.color_name} / {it.size}) × {it.qty}</span>
+            <span>
+              {it.product_name} (
+              {it.top_color_name
+                ? `상의: ${it.top_color_name} / ${it.top_size}, 하의: ${it.bottom_color_name} / ${it.bottom_size}`
+                : `${it.color_name} / ${it.size}`}
+              ) × {it.qty}
+            </span>
             <span>{formatKrw(it.unit_price * it.qty)}</span>
           </div>
         ))}

@@ -230,6 +230,12 @@
   transform: translateX(2px);
 }
 
+@media (max-width: 768px) {
+  .carousel-hero .carousel-slide img {
+    object-position: var(--mobile-object-position, center);
+  }
+}
+
 @media (max-width: 720px) {
   .carousel-hero-copy {
     left: var(--space-5);

@@ -50,6 +50,19 @@
   padding: var(--space-3) 0;
 }
 
+.product-option-set-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.product-option-set-label {
+  font-weight: 600;
+  color: var(--color-dark-brown);
+}
+
 .product-qty-row {
   display: flex;
   align-items: center;

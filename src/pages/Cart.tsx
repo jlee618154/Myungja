@@ -109,7 +109,15 @@ export default function Cart() {
                   {l.name}
                 </Link>
                 <span className="text-small">
-                  {l.color_name} / {l.size}
+                  {l.top_color_name ? (
+                    <>
+                      상의: {l.top_color_name} / {l.top_size} · 하의: {l.bottom_color_name} / {l.bottom_size}
+                    </>
+                  ) : (
+                    <>
+                      {l.color_name} / {l.size}
+                    </>
+                  )}
                 </span>
                 {soldOut && <span className="text-small" style={{ color: 'var(--color-error)' }}>품절된 상품입니다</span>}
               </div>

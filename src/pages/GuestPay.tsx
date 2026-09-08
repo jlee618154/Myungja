@@ -16,6 +16,10 @@ interface GuestPayItem {
   name: string;
   price: number;
   image_url: string;
+  top_color_name?: string;
+  top_size?: Size;
+  bottom_color_name?: string;
+  bottom_size?: Size;
 }
 
 const emptyAddress: AddressValue = { recipient_name: '', phone: '', zonecode: '', address1: '', address2: '' };
@@ -87,7 +91,18 @@ export default function GuestPay() {
     setError(null);
 
     const { data, error: createErr } = await supabase.rpc('create_guest_order', {
-      p_items: [{ product_id: item.product_id, color_name: item.color_name, size: item.size, qty: item.qty }],
+      p_items: [
+        {
+          product_id: item.product_id,
+          color_name: item.color_name,
+          size: item.size,
+          qty: item.qty,
+          top_color_name: item.top_color_name,
+          top_size: item.top_size,
+          bottom_color_name: item.bottom_color_name,
+          bottom_size: item.bottom_size,
+        },
+      ],
       p_guest_name: guestName,
       p_guest_phone: guestPhone,
       p_guest_email: guestEmail,
@@ -171,7 +186,10 @@ export default function GuestPay() {
             <div>
               <p className="h3">{item.name}</p>
               <p className="text-small">
-                {item.color_name} / {item.size} · {item.qty}개
+                {item.top_color_name
+                  ? `상의: ${item.top_color_name} / ${item.top_size} · 하의: ${item.bottom_color_name} / ${item.bottom_size}`
+                  : `${item.color_name} / ${item.size}`}{' '}
+                · {item.qty}개
               </p>
             </div>
             <span className="price">{formatKrw(subtotal)}</span>

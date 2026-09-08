@@ -170,6 +170,10 @@ export default function Checkout() {
         color_name: l.color_name,
         size: l.size,
         qty: l.qty,
+        top_color_name: l.top_color_name,
+        top_size: l.top_size,
+        bottom_color_name: l.bottom_color_name,
+        bottom_size: l.bottom_size,
       })),
       p_orderer_name: ordererName,
       p_orderer_phone: ordererPhone,
@@ -266,7 +270,10 @@ export default function Checkout() {
                 <div>
                   <p className="h3">{l.name}</p>
                   <p className="text-small">
-                    {l.color_name} / {l.size} · {l.qty}개
+                    {l.top_color_name
+                      ? `상의: ${l.top_color_name} / ${l.top_size} · 하의: ${l.bottom_color_name} / ${l.bottom_size}`
+                      : `${l.color_name} / ${l.size}`}{' '}
+                    · {l.qty}개
                   </p>
                 </div>
                 <span className="price">{formatKrw(l.price * l.qty)}</span>

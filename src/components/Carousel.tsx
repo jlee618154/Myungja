@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
 import './Carousel.css';
 
@@ -6,6 +6,7 @@ export interface CarouselSlide {
   src: string;
   alt: string;
   objectPosition?: string;
+  mobileObjectPosition?: string;
   label?: string;
   titleLine1?: string;
   titleLine2?: string;
@@ -57,7 +58,16 @@ export default function Carousel({
     >
       {slides.map((s, i) => (
         <div key={s.src} className={`carousel-slide ${i === index && mounted ? 'active' : ''}`}>
-          <img src={s.src} alt={s.alt} style={{ objectPosition: s.objectPosition ?? 'center' }} />
+          <img
+            src={s.src}
+            alt={s.alt}
+            style={
+              {
+                objectPosition: s.objectPosition ?? 'center',
+                '--mobile-object-position': s.mobileObjectPosition ?? s.objectPosition ?? 'center',
+              } as CSSProperties
+            }
+          />
           <div className="carousel-overlay" />
           {variant === 'hero' && (s.titleLine1 || s.subcopy) && (
             <div className="carousel-hero-copy">

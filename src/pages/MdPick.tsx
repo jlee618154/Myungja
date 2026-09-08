@@ -42,12 +42,14 @@ export default function MdPick() {
         style={{ backgroundImage: `url(${assetUrl(content.heroImage)})` }}
         aria-label={`${content.eyebrow} — ${content.title}`}
       >
-        {/* title/lead are baked into the hero photo itself; kept here visually-hidden for
-            screen readers and SEO instead of duplicating the text on top of the image */}
-        <div className="visually-hidden">
-          <p>{content.eyebrow}</p>
-          <h1>{content.title}</h1>
-          <p>{content.lead}</p>
+        {/* 데스크탑에서는 타이틀/리드 문구가 배너 사진에 이미 그려져 있어 이 블록은
+            시각적으로 숨기고 접근성/SEO용으로만 남겨둔다. 모바일(<=768px)에서는
+            좁은 화면 비율로 크롭하면 사진 속 문구가 잘려버리므로, 이 블록을 실제
+            텍스트 오버레이로 노출해 항상 온전히 읽히도록 한다 (MdPick.css 참고). */}
+        <div className="md-pick-hero-copy">
+          <p className="md-pick-hero-eyebrow en-label">{content.eyebrow}</p>
+          <h1 className="md-pick-hero-title">{content.title}</h1>
+          <p className="md-pick-hero-lead">{content.lead}</p>
         </div>
       </section>
 

@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { useCart } from '../contexts/CartContext';
 import { assetUrl, formatKrw } from '../lib/format';
-import type { ProductDetail as ProductDetailType, Size } from '../types';
+import type { ProductDetail as ProductDetailType, ProductOption, Size } from '../types';
 import Carousel from '../components/Carousel';
 import ColorSwatch from '../components/ColorSwatch';
 import SizeSelector from '../components/SizeSelector';
@@ -33,6 +33,18 @@ export default function ProductDetail() {
   const [message, setMessage] = useState<string | null>(null);
   const [openSections, setOpenSections] = useState<Set<string>>(new Set());
 
+  // SET 상품 전용: 상의/하의 각각 실제 원상품에서 가져온 옵션과 독립 선택 상태
+  const [topProductName, setTopProductName] = useState('');
+  const [bottomProductName, setBottomProductName] = useState('');
+  const [topOptions, setTopOptions] = useState<ProductOption[]>([]);
+  const [bottomOptions, setBottomOptions] = useState<ProductOption[]>([]);
+  const [topColor, setTopColor] = useState('');
+  const [topSize, setTopSize] = useState<Size | null>(null);
+  const [bottomColor, setBottomColor] = useState('');
+  const [bottomSize, setBottomSize] = useState<Size | null>(null);
+
+  const isSet = Boolean(product?.top_product_id && product?.bottom_product_id);
+
   const toggleSection = (key: string) => {
     setOpenSections((prev) => {
       const next = new Set(prev);
@@ -61,6 +73,27 @@ export default function ProductDetail() {
     setSize(null);
     setQty(1);
     setMessage(null);
+
+    if (p.top_product_id && p.bottom_product_id) {
+      const [{ data: topBottomProducts }, { data: topBottomOptions }] = await Promise.all([
+        supabase.from('products').select('id, name').in('id', [p.top_product_id, p.bottom_product_id]),
+        supabase.from('product_options').select('*').in('product_id', [p.top_product_id, p.bottom_product_id]),
+      ]);
+      const tOpts = (topBottomOptions ?? []).filter((o: any) => o.product_id === p.top_product_id);
+      const bOpts = (topBottomOptions ?? []).filter((o: any) => o.product_id === p.bottom_product_id);
+      setTopOptions(tOpts);
+      setBottomOptions(bOpts);
+      setTopProductName((topBottomProducts ?? []).find((pr: any) => pr.id === p.top_product_id)?.name ?? '상의');
+      setBottomProductName((topBottomProducts ?? []).find((pr: any) => pr.id === p.bottom_product_id)?.name ?? '하의');
+      setTopColor(tOpts.find((o: any) => o.stock_qty > 0)?.color_name ?? tOpts[0]?.color_name ?? '');
+      setBottomColor(bOpts.find((o: any) => o.stock_qty > 0)?.color_name ?? bOpts[0]?.color_name ?? '');
+      setTopSize(null);
+      setBottomSize(null);
+    } else {
+      setTopOptions([]);
+      setBottomOptions([]);
+    }
+
     setLoading(false);
   };
 
@@ -96,6 +129,38 @@ export default function ProductDetail() {
     [product, color, size]
   );
 
+  const toColorList = (opts: ProductOption[]) => {
+    const map = new Map<string, { hex: string; stock: number }>();
+    opts.forEach((o) => {
+      const cur = map.get(o.color_name) ?? { hex: o.color_hex, stock: 0 };
+      cur.stock += o.stock_qty;
+      map.set(o.color_name, cur);
+    });
+    return Array.from(map.entries()).map(([name, v]) => ({ name, hex: v.hex, available: v.stock > 0 }));
+  };
+
+  const toSizeAvailability = (opts: ProductOption[], selectedColor: string) => {
+    const map: Record<Size, boolean> = { S: false, M: false, L: false, XL: false };
+    opts.filter((o) => o.color_name === selectedColor).forEach((o) => {
+      map[o.size] = o.stock_qty > 0;
+    });
+    return map;
+  };
+
+  const topColors = useMemo(() => toColorList(topOptions), [topOptions]);
+  const bottomColors = useMemo(() => toColorList(bottomOptions), [bottomOptions]);
+  const topSizeAvailability = useMemo(() => toSizeAvailability(topOptions, topColor), [topOptions, topColor]);
+  const bottomSizeAvailability = useMemo(() => toSizeAvailability(bottomOptions, bottomColor), [bottomOptions, bottomColor]);
+
+  const selectedTopOption = useMemo(
+    () => topOptions.find((o) => o.color_name === topColor && o.size === topSize) ?? null,
+    [topOptions, topColor, topSize]
+  );
+  const selectedBottomOption = useMemo(
+    () => bottomOptions.find((o) => o.color_name === bottomColor && o.size === bottomSize) ?? null,
+    [bottomOptions, bottomColor, bottomSize]
+  );
+
   const galleryImages = useMemo(() => {
     if (!product) return [];
     const imgs = product.images.filter((i) => i.color_name === color);
@@ -105,38 +170,95 @@ export default function ProductDetail() {
   if (loading) return <div className="container product-detail-loading">불러오는 중...</div>;
   if (!product) return <div className="container product-detail-loading">상품을 찾을 수 없습니다.</div>;
 
-  const maxQty = selectedOption ? Math.min(selectedOption.stock_qty, 10) : 10;
+  const maxQty = isSet
+    ? Math.min(selectedTopOption?.stock_qty ?? 10, selectedBottomOption?.stock_qty ?? 10, 10)
+    : selectedOption
+    ? Math.min(selectedOption.stock_qty, 10)
+    : 10;
+
+  // SET 상품: 4개(상의색상/상의사이즈/하의색상/하의사이즈) 선택 검증 + 장바구니/주문 라인용 필드 구성
+  const validateAndBuildSetLine = (): {
+    color_name: string;
+    size: Size;
+    top_color_name: string;
+    top_size: Size;
+    bottom_color_name: string;
+    bottom_size: Size;
+  } | null => {
+    if (!topColor || !bottomColor) {
+      setMessage('색상을 선택해 주세요');
+      return null;
+    }
+    if (!topSize || !bottomSize) {
+      setMessage('사이즈를 선택해주세요');
+      return null;
+    }
+    if (!selectedTopOption || selectedTopOption.stock_qty < qty || !selectedBottomOption || selectedBottomOption.stock_qty < qty) {
+      setMessage('선택하신 옵션의 재고가 부족합니다');
+      return null;
+    }
+    return {
+      color_name: `상의 ${topColor} ${topSize} · 하의 ${bottomColor} ${bottomSize}`,
+      size: topSize,
+      top_color_name: topColor,
+      top_size: topSize,
+      bottom_color_name: bottomColor,
+      bottom_size: bottomSize,
+    };
+  };
 
   const handleAdd = async (goCheckout: boolean, presetPaymentMethod?: string) => {
-    if (!color) {
-      setMessage('색상을 선택해 주세요');
-      return;
-    }
-    if (!size) {
-      setMessage('사이즈를 선택해 주세요');
-      return;
-    }
-    if (!selectedOption || selectedOption.stock_qty < qty) {
-      setMessage('선택하신 옵션의 재고가 부족합니다');
-      return;
-    }
     const image = galleryImages[0]?.image_url ?? product.base_image_url;
-    const { error } = await addToCart(
-      {
-        product_id: product.id,
-        color_name: color,
-        size,
-        name: product.name,
-        price: product.price,
-        image_url: image,
-        slug: product.slug,
-      },
-      qty
-    );
-    if (error) {
-      setMessage(error);
-      return;
+
+    if (isSet) {
+      const setLine = validateAndBuildSetLine();
+      if (!setLine) return;
+      const { error } = await addToCart(
+        {
+          product_id: product.id,
+          ...setLine,
+          name: product.name,
+          price: product.price,
+          image_url: image,
+          slug: product.slug,
+        },
+        qty
+      );
+      if (error) {
+        setMessage(error);
+        return;
+      }
+    } else {
+      if (!color) {
+        setMessage('색상을 선택해 주세요');
+        return;
+      }
+      if (!size) {
+        setMessage('사이즈를 선택해 주세요');
+        return;
+      }
+      if (!selectedOption || selectedOption.stock_qty < qty) {
+        setMessage('선택하신 옵션의 재고가 부족합니다');
+        return;
+      }
+      const { error } = await addToCart(
+        {
+          product_id: product.id,
+          color_name: color,
+          size,
+          name: product.name,
+          price: product.price,
+          image_url: image,
+          slug: product.slug,
+        },
+        qty
+      );
+      if (error) {
+        setMessage(error);
+        return;
+      }
     }
+
     if (goCheckout) {
       navigate('/checkout', presetPaymentMethod ? { state: { presetPaymentMethod } } : undefined);
     } else {
@@ -147,6 +269,27 @@ export default function ProductDetail() {
   // 카카오페이/네이버페이 버튼 전용: 로그인 여부와 무관하게 비회원 결제 페이지로 바로 이동한다.
   // (장바구니에 담지 않고, 이 상품 1건만 즉시 결제하는 흐름)
   const handleGuestPay = (method: '카카오페이' | '네이버페이') => {
+    const image = galleryImages[0]?.image_url ?? product.base_image_url;
+
+    if (isSet) {
+      const setLine = validateAndBuildSetLine();
+      if (!setLine) return;
+      navigate('/pay/guest', {
+        state: {
+          presetPaymentMethod: method,
+          item: {
+            product_id: product.id,
+            ...setLine,
+            qty,
+            name: product.name,
+            price: product.price,
+            image_url: image,
+          },
+        },
+      });
+      return;
+    }
+
     if (!color) {
       setMessage('색상을 선택해 주세요');
       return;
@@ -159,7 +302,6 @@ export default function ProductDetail() {
       setMessage('선택하신 옵션의 재고가 부족합니다');
       return;
     }
-    const image = galleryImages[0]?.image_url ?? product.base_image_url;
     navigate('/pay/guest', {
       state: {
         presetPaymentMethod: method,
@@ -209,13 +351,61 @@ export default function ProductDetail() {
           </div>
           <p className="price product-price">{formatKrw(product.price)}</p>
 
-          <div className="product-option-block">
-            <ColorSwatch colors={colors} selected={color} onSelect={(c) => { setColor(c); setSize(null); setMessage(null); }} />
-          </div>
+          {isSet ? (
+            <>
+              <div className="product-option-block product-option-set-group">
+                <p className="text-small product-option-set-label">상의 옵션 ({topProductName})</p>
+                <ColorSwatch
+                  colors={topColors}
+                  selected={topColor}
+                  onSelect={(c) => {
+                    setTopColor(c);
+                    setTopSize(null);
+                    setMessage(null);
+                  }}
+                />
+                <SizeSelector
+                  availability={topSizeAvailability}
+                  selected={topSize}
+                  onSelect={(s) => {
+                    setTopSize(s);
+                    setMessage(null);
+                  }}
+                />
+              </div>
 
-          <div className="product-option-block">
-            <SizeSelector availability={sizeAvailability} selected={size} onSelect={(s) => { setSize(s); setMessage(null); }} />
-          </div>
+              <div className="product-option-block product-option-set-group">
+                <p className="text-small product-option-set-label">하의 옵션 ({bottomProductName})</p>
+                <ColorSwatch
+                  colors={bottomColors}
+                  selected={bottomColor}
+                  onSelect={(c) => {
+                    setBottomColor(c);
+                    setBottomSize(null);
+                    setMessage(null);
+                  }}
+                />
+                <SizeSelector
+                  availability={bottomSizeAvailability}
+                  selected={bottomSize}
+                  onSelect={(s) => {
+                    setBottomSize(s);
+                    setMessage(null);
+                  }}
+                />
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="product-option-block">
+                <ColorSwatch colors={colors} selected={color} onSelect={(c) => { setColor(c); setSize(null); setMessage(null); }} />
+              </div>
+
+              <div className="product-option-block">
+                <SizeSelector availability={sizeAvailability} selected={size} onSelect={(s) => { setSize(s); setMessage(null); }} />
+              </div>
+            </>
+          )}
 
           <div className="product-option-block product-qty-row">
             <span className="text-small">수량</span>
