@@ -1,10 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import './Carousel.css';
 
 export interface CarouselSlide {
   src: string;
   alt: string;
   objectPosition?: string;
+  label?: string;
+  titleLine1?: string;
+  titleLine2?: string;
+  subcopy?: string;
+  ctaLabel?: string;
+  ctaTo?: string;
 }
 
 export default function Carousel({
@@ -52,8 +59,27 @@ export default function Carousel({
         <div key={s.src} className={`carousel-slide ${i === index && mounted ? 'active' : ''}`}>
           <img src={s.src} alt={s.alt} style={{ objectPosition: s.objectPosition ?? 'center' }} />
           <div className="carousel-overlay" />
+          {variant === 'hero' && (s.titleLine1 || s.subcopy) && (
+            <div className="carousel-hero-copy">
+              {s.label && <p className="carousel-hero-label">{s.label}</p>}
+              {(s.titleLine1 || s.titleLine2) && (
+                <p className="carousel-hero-title">
+                  {s.titleLine1 && <span className="carousel-hero-title-line1 en-label">{s.titleLine1}</span>}
+                  {s.titleLine2 && <span className="carousel-hero-title-line2 en-label">{s.titleLine2}</span>}
+                </p>
+              )}
+              {s.subcopy && <p className="carousel-hero-subcopy">{s.subcopy}</p>}
+              {s.ctaLabel && s.ctaTo && (
+                <Link to={s.ctaTo} className="carousel-hero-cta">
+                  {s.ctaLabel}
+                </Link>
+              )}
+            </div>
+          )}
         </div>
       ))}
+
+      {variant === 'hero' && <div className="carousel-hero-scrim" aria-hidden="true" />}
 
       {slides.length > 1 && variant === 'hero' && (
         <>

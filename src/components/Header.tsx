@@ -61,9 +61,31 @@ export default function Header() {
   const location = useLocation();
   const headerRef = useRef<HTMLElement>(null);
 
+  const isHome = location.pathname === '/';
+  const [scrolled, setScrolled] = useState(false);
+
   useEffect(() => {
     setActiveNav(null);
   }, [location.pathname]);
+
+  useEffect(() => {
+    if (!isHome) {
+      setScrolled(false);
+      return;
+    }
+    let threshold = Math.max(window.innerHeight - 88, 200);
+    const onResize = () => {
+      threshold = Math.max(window.innerHeight - 88, 200);
+    };
+    const onScroll = () => setScrolled(window.scrollY > threshold);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onResize);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onResize);
+    };
+  }, [isHome]);
 
   useEffect(() => {
     supabase
@@ -96,7 +118,7 @@ export default function Header() {
   return (
     <header
       ref={headerRef}
-      className={`site-header ${location.pathname === '/' ? 'site-header-overlay' : ''}`}
+      className={`site-header ${isHome ? 'site-header-overlay' : ''} ${isHome && scrolled ? 'site-header-scrolled' : ''}`}
       onMouseLeave={() => setActiveNav(null)}
       onBlur={closeIfFocusLeft}
     >

@@ -156,3 +156,84 @@
   background: var(--color-ivory);
   height: 40px;
 }
+
+.carousel-hero-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(30, 22, 16, 0.55) 0%, rgba(30, 22, 16, 0.28) 42%, rgba(30, 22, 16, 0) 72%);
+}
+
+.carousel-hero-copy {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: var(--space-7);
+  transform: translateY(-50%);
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.carousel-hero-label {
+  font-family: var(--font-en);
+  color: var(--color-warm-beige);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.carousel-hero-title {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.carousel-hero-title-line1,
+.carousel-hero-title-line2 {
+  font-size: clamp(36px, 5vw, 64px);
+  color: var(--color-ivory);
+}
+
+.carousel-hero-title-line2 {
+  font-style: italic;
+  color: var(--color-orange);
+}
+
+.carousel-hero-subcopy {
+  color: var(--color-ivory);
+  font-weight: 300;
+  font-size: var(--fs-body, 16px);
+  max-width: 400px;
+}
+
+.carousel-hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: fit-content;
+  background: var(--color-ivory);
+  color: var(--color-dark-brown);
+  padding: var(--space-3) var(--space-6);
+  border-radius: 999px;
+  font-size: var(--fs-nav);
+  font-weight: 600;
+  margin-top: var(--space-2);
+  transition: background-color 0.25s ease, transform 0.25s ease;
+}
+
+.carousel-hero-cta:hover {
+  background: var(--color-warm-beige);
+  transform: translateX(2px);
+}
+
+@media (max-width: 720px) {
+  .carousel-hero-copy {
+    left: var(--space-5);
+    right: var(--space-5);
+    max-width: none;
+  }
+}

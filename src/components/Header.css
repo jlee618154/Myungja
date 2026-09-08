@@ -7,12 +7,19 @@
   background: var(--color-ivory);
   border-bottom: 1px solid var(--color-border);
   color: var(--color-dark-brown);
+  transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease;
 }
 
 .site-header-overlay {
   background: transparent;
   border-bottom-color: transparent;
   color: var(--color-ivory);
+}
+
+.site-header-overlay.site-header-scrolled {
+  background: var(--color-ivory);
+  border-bottom-color: var(--color-border);
+  color: var(--color-dark-brown);
 }
 
 .site-header-inner {

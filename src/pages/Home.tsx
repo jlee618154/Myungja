@@ -4,9 +4,39 @@ import { assetUrl } from '../lib/format';
 import './Home.css';
 
 const HERO_SLIDES = [
-  { src: assetUrl('images/hero-hiking.png'), alt: 'MYUNGJA 등산 라이프스타일', objectPosition: 'center center' },
-  { src: assetUrl('images/hero-marathon.png'), alt: 'MYUNGJA 마라톤 라이프스타일', objectPosition: 'center center' },
-  { src: assetUrl('images/hero-yoga.png'), alt: 'MYUNGJA 요가 라이프스타일', objectPosition: 'center center' },
+  {
+    src: assetUrl('images/hero-hiking.png'),
+    alt: 'MYUNGJA 등산 라이프스타일',
+    objectPosition: 'center center',
+    label: '40 · 50 ACTIVE LIFE',
+    titleLine1: 'Move easy.',
+    titleLine2: 'Live easy.',
+    subcopy: '산을 오르는 걸음에도, 편안함은 타협하지 않습니다.',
+    ctaLabel: '컬렉션 보기 →',
+    ctaTo: '/md/hiking',
+  },
+  {
+    src: assetUrl('images/hero-marathon.png'),
+    alt: 'MYUNGJA 마라톤 라이프스타일',
+    objectPosition: 'center center',
+    label: '40 · 50 ACTIVE LIFE',
+    titleLine1: 'Move easy.',
+    titleLine2: 'Live easy.',
+    subcopy: '속도를 높이는 순간에도, 편안함은 타협하지 않습니다.',
+    ctaLabel: '컬렉션 보기 →',
+    ctaTo: '/md/marathon',
+  },
+  {
+    src: assetUrl('images/hero-yoga.png'),
+    alt: 'MYUNGJA 요가 라이프스타일',
+    objectPosition: 'center center',
+    label: '40 · 50 ACTIVE LIFE',
+    titleLine1: 'Move easy.',
+    titleLine2: 'Live easy.',
+    subcopy: '숨을 고르는 순간에도, 편안함은 타협하지 않습니다.',
+    ctaLabel: '컬렉션 보기 →',
+    ctaTo: '/md/yoga',
+  },
 ];
 
 const MD_PICKS = [
