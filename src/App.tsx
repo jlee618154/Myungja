@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import InquiryPopup from './components/InquiryPopup';
+import MusicPlayer from './components/MusicPlayer';
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminRoute from './components/AdminRoute';
 import ScrollToTop from './components/ScrollToTop';
@@ -102,6 +103,7 @@ function Storefront() {
       </main>
       <Footer />
       <InquiryPopup />
+      <MusicPlayer />
     </div>
   );
 }

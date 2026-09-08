@@ -1,0 +1,29 @@
+.music-fab {
+  position: fixed;
+  right: var(--space-6);
+  bottom: calc(var(--space-6) + 62px + var(--space-3));
+  z-index: 300;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-dark-brown);
+  color: var(--color-ivory);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: var(--shadow-card);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.music-fab:hover {
+  background: var(--color-orange);
+  transform: scale(1.05);
+}
+
+.music-fab svg {
+  width: 20px;
+  height: 20px;
+}
