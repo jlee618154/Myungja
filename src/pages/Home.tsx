@@ -11,7 +11,7 @@ const HERO_SLIDES = [
     label: '40 · 50 ACTIVE LIFE',
     titleLine1: 'Move easy.',
     titleLine2: 'Live easy.',
-    subcopy: '산을 오르는 걸음에도, 편안함은 타협하지 않습니다.',
+    subcopy: '동네를 걷는 걸음에도, 나만의 리듬을 지킵니다.',
     ctaLabel: '컬렉션 보기 →',
     ctaTo: '/md/hiking',
   },

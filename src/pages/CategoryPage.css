@@ -7,6 +7,16 @@
   margin-bottom: var(--space-6);
 }
 
+.category-title:has(+ .category-subtitle) {
+  margin-bottom: var(--space-2);
+}
+
+.category-subtitle {
+  text-align: center;
+  color: var(--color-gray-brown);
+  margin-bottom: var(--space-6);
+}
+
 .category-sort {
   display: flex;
   justify-content: flex-end;

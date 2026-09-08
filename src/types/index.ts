@@ -1,4 +1,4 @@
-export type Category = 'TOP' | 'BOTTOM' | 'OUTER';
+export type Category = 'TOP' | 'BOTTOM' | 'OUTER' | 'SET';
 export type Size = 'S' | 'M' | 'L' | 'XL';
 export const SIZES: Size[] = ['S', 'M', 'L', 'XL'];
 
@@ -6,6 +6,7 @@ export interface Product {
   id: string;
   slug: string;
   category: Category;
+  subcategory: string | null;
   name: string;
   price: number;
   summary: string | null;

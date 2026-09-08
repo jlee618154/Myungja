@@ -37,41 +37,41 @@ type MenuEntry =
   | { kind: 'section'; label: string; sectionId: string };
 
 const MENU: MenuEntry[] = [
-  { kind: 'link', label: 'NEW', to: '/' },
+  { kind: 'link', label: 'NEW', to: '/new' },
   { kind: 'link', label: 'TOP', to: '/top' },
   { kind: 'link', label: 'BOTTOM', to: '/bottom' },
-  { kind: 'link', label: 'SET', to: '/' },
+  { kind: 'link', label: 'SET', to: '/set' },
   { kind: 'link', label: 'OUTER', to: '/outer' },
   { kind: 'section', label: 'MD PICK', sectionId: 'md-pick-section' },
   { kind: 'section', label: 'ABOUT', sectionId: 'about-myungja' },
 ];
 
-// 상품 스키마에 하위 카테고리 데이터가 없어, 메가메뉴용 하위 항목은 큐레이션된 고정 목록으로 구성.
-// NEW/SET은 아직 별도 카테고리/페이지가 없어 홈으로 연결(실제 카테고리 페이지가 생기면 교체 필요).
+// 소분류 클릭 시 해당 카테고리 페이지로 이동 + ?sub= 로 실제 상품 필터링.
+// SET은 대분류 자체는 만들어져 있지만 아직 실제 세트 상품이 없어 목록이 빈 상태로 보임(허위 데이터를 넣지 않기 위함).
 const SUBMENU: Record<string, { label: string; to: string }[]> = {
   NEW: [
-    { label: '이주의 신상', to: '/' },
-    { label: '베스트셀러', to: '/' },
+    { label: '이주의 신상', to: '/new?sub=이주의신상' },
+    { label: '베스트셀러', to: '/new?sub=베스트셀러' },
   ],
   TOP: [
-    { label: '브라탑', to: '/top' },
-    { label: '티셔츠', to: '/top' },
-    { label: '니트', to: '/top' },
-    { label: '후드', to: '/top' },
+    { label: '브라탑', to: '/top?sub=브라탑' },
+    { label: '티셔츠', to: '/top?sub=티셔츠' },
+    { label: '니트', to: '/top?sub=니트' },
+    { label: '후드', to: '/top?sub=후드' },
   ],
   BOTTOM: [
-    { label: '레깅스', to: '/bottom' },
-    { label: '반바지', to: '/bottom' },
-    { label: '조거팬츠', to: '/bottom' },
+    { label: '레깅스', to: '/bottom?sub=레깅스' },
+    { label: '반바지', to: '/bottom?sub=반바지' },
+    { label: '조거팬츠', to: '/bottom?sub=조거팬츠' },
   ],
   SET: [
-    { label: '브라탑 + 레깅스 세트', to: '/' },
-    { label: '위아래 세트', to: '/' },
+    { label: '브라탑 + 레깅스 세트', to: '/set?sub=브라탑 레깅스 세트' },
+    { label: '위아래 세트', to: '/set?sub=위아래 세트' },
   ],
   OUTER: [
-    { label: '자켓', to: '/outer' },
-    { label: '베스트', to: '/outer' },
-    { label: '가디건', to: '/outer' },
+    { label: '자켓', to: '/outer?sub=자켓' },
+    { label: '베스트', to: '/outer?sub=베스트' },
+    { label: '가디건', to: '/outer?sub=가디건' },
   ],
   'MD PICK': [
     { label: '등산', to: '/md/hiking' },

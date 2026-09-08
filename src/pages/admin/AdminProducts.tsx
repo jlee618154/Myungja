@@ -21,6 +21,7 @@ interface EditableProduct {
   id?: string;
   slug: string;
   category: Category;
+  subcategory: string;
   name: string;
   price: number;
   base_image_url: string;
@@ -31,6 +32,7 @@ interface EditableProduct {
 const EMPTY_PRODUCT: EditableProduct = {
   slug: '',
   category: 'TOP',
+  subcategory: '',
   name: '',
   price: 0,
   base_image_url: '',
@@ -87,6 +89,7 @@ export default function AdminProducts() {
       id: p.id,
       slug: p.slug,
       category: p.category,
+      subcategory: p.subcategory ?? '',
       name: p.name,
       price: p.price,
       base_image_url: p.base_image_url,
@@ -145,6 +148,7 @@ export default function AdminProducts() {
         .update({
           slug: editing.slug,
           category: editing.category,
+          subcategory: editing.subcategory || null,
           name: editing.name,
           price: editing.price,
           base_image_url: editing.base_image_url,
@@ -178,6 +182,7 @@ export default function AdminProducts() {
         .insert({
           slug: editing.slug,
           category: editing.category,
+          subcategory: editing.subcategory || null,
           name: editing.name,
           price: editing.price,
           base_image_url: editing.base_image_url || 'images/hero-1.png',
@@ -288,8 +293,17 @@ export default function AdminProducts() {
               >
                 <option value="TOP">TOP</option>
                 <option value="BOTTOM">BOTTOM</option>
+                <option value="SET">SET</option>
                 <option value="OUTER">OUTER</option>
               </select>
+            </div>
+            <div className="admin-form-row">
+              <label>소분류</label>
+              <input
+                placeholder="예: 브라탑, 티셔츠, 레깅스, 자켓 등"
+                value={editing.subcategory}
+                onChange={(e) => setEditing((prev) => (prev ? { ...prev, subcategory: e.target.value } : prev))}
+              />
             </div>
             <div className="admin-form-row">
               <label>가격</label>
