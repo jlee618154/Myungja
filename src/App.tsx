@@ -4,6 +4,7 @@ import Footer from './components/Footer';
 import InquiryPopup from './components/InquiryPopup';
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminRoute from './components/AdminRoute';
+import ScrollToTop from './components/ScrollToTop';
 
 import Home from './pages/Home';
 import CategoryPage from './pages/CategoryPage';
@@ -104,6 +105,8 @@ function Storefront() {
 
 export default function App() {
   return (
+    <>
+    <ScrollToTop />
     <Routes>
       <Route
         path="/admin"
@@ -120,5 +123,6 @@ export default function App() {
       </Route>
       <Route path="/*" element={<Storefront />} />
     </Routes>
+    </>
   );
 }
