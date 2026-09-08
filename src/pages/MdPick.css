@@ -108,3 +108,20 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (max-width: 480px) {
+  .md-pick-hero {
+    height: 50vh;
+    min-height: 360px;
+  }
+
+  .md-pick-essay,
+  .md-pick-briefing,
+  .md-pick-closing {
+    padding: var(--space-7) 0;
+  }
+
+  .md-pick-products {
+    padding: var(--space-7) var(--container-pad);
+  }
+}

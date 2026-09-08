@@ -27,3 +27,17 @@
   width: 20px;
   height: 20px;
 }
+
+@media (max-width: 480px) {
+  .music-fab {
+    width: 42px;
+    height: 42px;
+    right: var(--space-4);
+    bottom: calc(var(--space-4) + 52px + var(--space-2));
+  }
+
+  .music-fab svg {
+    width: 18px;
+    height: 18px;
+  }
+}

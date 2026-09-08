@@ -236,4 +236,37 @@
     right: var(--space-5);
     max-width: none;
   }
+
+  .carousel-hero-title-line1,
+  .carousel-hero-title-line2 {
+    font-size: clamp(28px, 9vw, 48px);
+  }
+
+  .carousel-counter {
+    top: 96px;
+    left: var(--space-4);
+  }
+
+  .carousel-bars {
+    right: var(--space-4);
+  }
+
+  .carousel-hero-cta {
+    padding: var(--space-2) var(--space-5);
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-hero {
+    height: 100svh;
+    min-height: 520px;
+  }
+
+  .carousel-counter {
+    top: 76px;
+  }
+
+  .carousel-hero-subcopy {
+    max-width: none;
+  }
 }

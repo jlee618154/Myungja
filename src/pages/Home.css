@@ -73,6 +73,30 @@
 
   .about-section {
     min-height: auto;
+    padding: var(--space-7) 0;
+  }
+
+  .about-columns {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+
+  .md-pick-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-hero {
+    margin-top: -64px;
+  }
+
+  .md-pick-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .md-pick {
+    padding: var(--space-7) var(--container-pad) 64px;
   }
 }
 

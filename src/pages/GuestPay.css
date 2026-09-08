@@ -38,3 +38,11 @@
   gap: var(--space-3);
   align-items: center;
 }
+
+@media (max-width: 900px) {
+  .guest-pay-page {
+    grid-template-columns: 1fr;
+    padding: var(--space-6) var(--container-pad) var(--space-8);
+    gap: var(--space-6);
+  }
+}

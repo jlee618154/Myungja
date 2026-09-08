@@ -51,10 +51,29 @@
 
 .inquiry-panel {
   width: 420px;
+  max-width: 90vw;
   max-height: 80vh;
   overflow-y: auto;
   padding: var(--space-6);
   background: var(--color-ivory);
+}
+
+@media (max-width: 480px) {
+  .inquiry-fab {
+    width: 52px;
+    height: 52px;
+    right: var(--space-4);
+    bottom: var(--space-4);
+  }
+
+  .inquiry-fab-icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .inquiry-panel {
+    padding: var(--space-5);
+  }
 }
 
 .inquiry-header {

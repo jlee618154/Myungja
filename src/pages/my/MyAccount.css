@@ -62,3 +62,31 @@
 .my-section-title {
   margin-bottom: var(--space-5);
 }
+
+@media (max-width: 768px) {
+  .my-account-page {
+    grid-template-columns: 1fr;
+    padding: var(--space-6) var(--container-pad) var(--space-8);
+    gap: var(--space-5);
+  }
+
+  .my-sidebar nav ul {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: var(--space-5);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--color-border);
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .my-sidebar a,
+  .my-nav-btn {
+    white-space: nowrap;
+  }
+
+  .my-summary-card {
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+}

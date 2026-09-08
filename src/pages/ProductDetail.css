@@ -184,3 +184,26 @@
   margin: var(--space-2) 0 0;
   color: var(--color-gray-brown);
 }
+
+@media (max-width: 900px) {
+  .product-detail-top {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    padding: var(--space-6) var(--container-pad);
+  }
+
+  .product-summary,
+  .product-description {
+    padding: var(--space-6) var(--container-pad);
+  }
+}
+
+@media (max-width: 480px) {
+  .product-actions {
+    flex-direction: column;
+  }
+
+  .product-actions-pay {
+    flex-direction: column;
+  }
+}

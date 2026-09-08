@@ -32,6 +32,25 @@ function BagIcon() {
   );
 }
 
+function MenuIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="4" y1="7" x2="20" y2="7" />
+      <line x1="4" y1="12" x2="20" y2="12" />
+      <line x1="4" y1="17" x2="20" y2="17" />
+    </svg>
+  );
+}
+
+function CloseIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="5" y1="5" x2="19" y2="19" />
+      <line x1="19" y1="5" x2="5" y2="19" />
+    </svg>
+  );
+}
+
 type MenuEntry =
   | { kind: 'link'; label: string; to: string }
   | { kind: 'section'; label: string; sectionId: string };
@@ -84,6 +103,7 @@ export default function Header() {
   const { totalCount } = useCart();
   const [searchOpen, setSearchOpen] = useState(false);
   const [activeNav, setActiveNav] = useState<string | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const headerRef = useRef<HTMLElement>(null);
@@ -93,6 +113,7 @@ export default function Header() {
 
   useEffect(() => {
     setActiveNav(null);
+    setMobileMenuOpen(false);
   }, [location.pathname]);
 
   useEffect(() => {
@@ -132,6 +153,7 @@ export default function Header() {
       document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
     });
     setActiveNav(null);
+    setMobileMenuOpen(false);
   };
 
   const closeIfFocusLeft = (e: React.FocusEvent) => {
@@ -212,7 +234,40 @@ export default function Header() {
             </span>
             <span className="icon-btn-label">BAG({totalCount})</span>
           </Link>
+          <button
+            type="button"
+            className="hamburger-btn"
+            aria-label="메뉴 열기"
+            aria-expanded={mobileMenuOpen}
+            onClick={() => setMobileMenuOpen((v) => !v)}
+          >
+            <MenuIcon />
+          </button>
         </div>
+      </div>
+
+      <div className={`mobile-menu-overlay ${mobileMenuOpen ? 'open' : ''}`}>
+        <div className="mobile-menu-header">
+          <span className="logo en-label">MYUNGJA</span>
+          <button type="button" className="mobile-menu-close" aria-label="메뉴 닫기" onClick={() => setMobileMenuOpen(false)}>
+            <CloseIcon />
+          </button>
+        </div>
+        <ul className="mobile-menu-list">
+          {MENU.map((item) => (
+            <li key={item.label}>
+              {item.kind === 'section' ? (
+                <button type="button" className="mobile-menu-link" onClick={() => goToSection(item.sectionId)}>
+                  {item.label}
+                </button>
+              ) : (
+                <Link to={item.to} className="mobile-menu-link" onClick={() => setMobileMenuOpen(false)}>
+                  {item.label}
+                </Link>
+              )}
+            </li>
+          ))}
+        </ul>
       </div>
 
       <div className={`nav-submenu-bar ${activeNav ? 'open' : ''}`}>

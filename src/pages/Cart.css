@@ -115,3 +115,59 @@
   gap: var(--space-3);
   margin-top: var(--space-6);
 }
+
+@media (max-width: 600px) {
+  .cart-page {
+    padding: var(--space-6) var(--container-pad) var(--space-8);
+  }
+
+  .cart-line {
+    grid-template-columns: 20px 76px 1fr auto;
+    grid-template-areas:
+      'check img info remove'
+      'check img qty price';
+    row-gap: var(--space-2);
+  }
+
+  .cart-line > input[type='checkbox'] {
+    grid-area: check;
+  }
+
+  .cart-line > a {
+    grid-area: img;
+  }
+
+  .cart-line-info {
+    grid-area: info;
+  }
+
+  .qty-stepper {
+    grid-area: qty;
+  }
+
+  .cart-line-price {
+    grid-area: price;
+    text-align: left;
+  }
+
+  .cart-line-remove {
+    grid-area: remove;
+  }
+
+  .cart-line img {
+    width: 76px;
+    height: 96px;
+  }
+
+  .cart-summary {
+    max-width: none;
+  }
+
+  .cart-page-actions {
+    flex-direction: column-reverse;
+  }
+
+  .cart-page-actions .btn {
+    width: 100%;
+  }
+}

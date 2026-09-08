@@ -108,3 +108,21 @@
 .mock-pay-actions .btn {
   flex: 1;
 }
+
+@media (max-width: 900px) {
+  .checkout-page {
+    grid-template-columns: 1fr;
+    padding: var(--space-6) var(--container-pad) var(--space-8);
+    gap: var(--space-6);
+  }
+
+  .checkout-summary {
+    position: static;
+  }
+}
+
+@media (max-width: 480px) {
+  .mock-pay-modal {
+    width: 90vw;
+  }
+}
