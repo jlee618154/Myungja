@@ -74,25 +74,29 @@ export default function Home() {
         <div className="container about-inner">
           <p className="about-eyebrow en-label">ABOUT MYUNGJA</p>
           <p className="about-quote h1">
-            <span className="about-quote-highlight">몸을 조이지 않고, 삶의 속도를 따라가는 옷.</span>
-            <br />
-            <span className="about-quote-line">명자는 애쓰지 않는 편안함을 가장 아름다운 태도라 믿습니다.</span>
+            <span className="about-quote-line">
+              몸을 조이지 않고, <span className="about-highlight">삶의 속도</span>를 따라가는 옷.
+            </span>
+            <span className="about-quote-line">
+              명자는 <span className="about-highlight">애쓰지 않는 편안함</span>을 가장 아름다운 태도라 믿습니다.
+            </span>
           </p>
           <div className="about-divider" />
           <div className="about-columns">
             <p>
-              MYUNGJA는 편안함과 세련된 스타일을 함께 추구하는 40~50대 여성을 위한 프리미엄 액티브웨어 브랜드입니다.
-              몸을 조이는 대신 삶의 속도를 따라가는 옷을 만듭니다.
+              MYUNGJA는 하루를 더 빠르게 재촉하는 옷보다, 지금의 몸과 자연스럽게 호흡하는 옷을 만듭니다. 요가를 하는
+              고요한 아침부터 오래 걷고 달리는 오후까지, 옷이 먼저 나서지 않고 입는 사람의 움직임을 따라가기를
+              바랍니다.
             </p>
             <p>
-              슬로건 &lsquo;Move easy. Live easy.&rsquo; 아래, 화려함보다는 여백이 있는 편집숍의 태도로 하루하루의
-              움직임을 위한 옷을 제안합니다.
+              부드러운 촉감과 유연한 실루엣, 오래 보아도 편안한 색을 고르는 이유도 같습니다. 나이와 체형을 감추기보다
+              지금의 나를 편안하게 드러내는 것. 그것이 MYUNGJA가 말하는 일상의 아름다움입니다.
             </p>
           </div>
         </div>
       </section>
 
-      <section className="md-pick container">
+      <section id="md-pick-section" className="md-pick container">
         <h2 className="h2 en-label md-pick-title">MD PICK</h2>
         <div className="md-pick-grid">
           {MD_PICKS.map((m) => (

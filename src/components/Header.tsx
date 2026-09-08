@@ -2,9 +2,6 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useCart } from '../contexts/CartContext';
-import { supabase } from '../lib/supabase';
-import { assetUrl } from '../lib/format';
-import type { Category } from '../types';
 import SearchOverlay from './SearchOverlay';
 import './Header.css';
 
@@ -35,28 +32,59 @@ function BagIcon() {
   );
 }
 
-const NAV: { label: string; to: string; category: Category }[] = [
-  { label: 'TOP', to: '/top', category: 'TOP' },
-  { label: 'BOTTOM', to: '/bottom', category: 'BOTTOM' },
-  { label: 'OUTER', to: '/outer', category: 'OUTER' },
+type MenuEntry =
+  | { kind: 'link'; label: string; to: string }
+  | { kind: 'section'; label: string; sectionId: string };
+
+const MENU: MenuEntry[] = [
+  { kind: 'link', label: 'NEW', to: '/' },
+  { kind: 'link', label: 'TOP', to: '/top' },
+  { kind: 'link', label: 'BOTTOM', to: '/bottom' },
+  { kind: 'link', label: 'SET', to: '/' },
+  { kind: 'link', label: 'OUTER', to: '/outer' },
+  { kind: 'section', label: 'MD PICK', sectionId: 'md-pick-section' },
+  { kind: 'section', label: 'ABOUT', sectionId: 'about-myungja' },
 ];
 
-interface NavProduct {
-  slug: string;
-  name: string;
-  image: string;
-}
+// 상품 스키마에 하위 카테고리 데이터가 없어, 메가메뉴용 하위 항목은 큐레이션된 고정 목록으로 구성.
+// NEW/SET은 아직 별도 카테고리/페이지가 없어 홈으로 연결(실제 카테고리 페이지가 생기면 교체 필요).
+const SUBMENU: Record<string, { label: string; to: string }[]> = {
+  NEW: [
+    { label: '이주의 신상', to: '/' },
+    { label: '베스트셀러', to: '/' },
+  ],
+  TOP: [
+    { label: '브라탑', to: '/top' },
+    { label: '티셔츠', to: '/top' },
+    { label: '니트', to: '/top' },
+    { label: '후드', to: '/top' },
+  ],
+  BOTTOM: [
+    { label: '레깅스', to: '/bottom' },
+    { label: '반바지', to: '/bottom' },
+    { label: '조거팬츠', to: '/bottom' },
+  ],
+  SET: [
+    { label: '브라탑 + 레깅스 세트', to: '/' },
+    { label: '위아래 세트', to: '/' },
+  ],
+  OUTER: [
+    { label: '자켓', to: '/outer' },
+    { label: '베스트', to: '/outer' },
+    { label: '가디건', to: '/outer' },
+  ],
+  'MD PICK': [
+    { label: '등산', to: '/md/hiking' },
+    { label: '마라톤', to: '/md/marathon' },
+    { label: '요가', to: '/md/yoga' },
+  ],
+};
 
 export default function Header() {
   const { user } = useAuth();
   const { totalCount } = useCart();
   const [searchOpen, setSearchOpen] = useState(false);
   const [activeNav, setActiveNav] = useState<string | null>(null);
-  const [productsByCategory, setProductsByCategory] = useState<Record<Category, NavProduct[]>>({
-    TOP: [],
-    BOTTOM: [],
-    OUTER: [],
-  });
   const navigate = useNavigate();
   const location = useLocation();
   const headerRef = useRef<HTMLElement>(null);
@@ -73,9 +101,10 @@ export default function Header() {
       setScrolled(false);
       return;
     }
-    let threshold = Math.max(window.innerHeight - 88, 200);
+    const getThreshold = () => Math.max(window.innerHeight - (headerRef.current?.offsetHeight ?? 88), 200);
+    let threshold = getThreshold();
     const onResize = () => {
-      threshold = Math.max(window.innerHeight - 88, 200);
+      threshold = getThreshold();
     };
     const onScroll = () => setScrolled(window.scrollY > threshold);
     onScroll();
@@ -88,25 +117,22 @@ export default function Header() {
   }, [isHome]);
 
   useEffect(() => {
-    supabase
-      .from('products')
-      .select('slug, name, category, base_image_url')
-      .eq('is_active', true)
-      .order('created_at', { ascending: true })
-      .then(({ data }) => {
-        const grouped: Record<Category, NavProduct[]> = { TOP: [], BOTTOM: [], OUTER: [] };
-        (data ?? []).forEach((p: any) => {
-          grouped[p.category as Category]?.push({ slug: p.slug, name: p.name, image: p.base_image_url });
-        });
-        setProductsByCategory(grouped);
-      });
-  }, []);
+    if (!activeNav) return;
+    const onClickOutside = (e: MouseEvent) => {
+      if (!headerRef.current?.contains(e.target as Node)) {
+        setActiveNav(null);
+      }
+    };
+    document.addEventListener('mousedown', onClickOutside);
+    return () => document.removeEventListener('mousedown', onClickOutside);
+  }, [activeNav]);
 
-  const goAbout = () => {
+  const goToSection = (sectionId: string) => {
     navigate('/');
     requestAnimationFrame(() => {
-      document.getElementById('about-myungja')?.scrollIntoView({ behavior: 'smooth' });
+      document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
     });
+    setActiveNav(null);
   };
 
   const closeIfFocusLeft = (e: React.FocusEvent) => {
@@ -122,6 +148,10 @@ export default function Header() {
       onMouseLeave={() => setActiveNav(null)}
       onBlur={closeIfFocusLeft}
     >
+      <div className="announcement-bar">
+        MEMBER 가입 시 첫 구매 15% 할인 · 5만원 이상 무료배송
+      </div>
+
       <div className="site-header-inner">
         <Link to="/" className="logo en-label">
           MYUNGJA
@@ -129,31 +159,33 @@ export default function Header() {
 
         <nav className="main-nav" aria-label="주요 메뉴">
           <ul>
-            {NAV.map((item) => (
+            {MENU.map((item) => (
               <li
                 key={item.label}
                 className="nav-item"
-                onMouseEnter={() => setActiveNav(item.category)}
+                onMouseEnter={() => setActiveNav(SUBMENU[item.label] ? item.label : null)}
               >
-                <Link
-                  to={item.to}
-                  className="nav-link link-hover"
-                  onFocus={() => setActiveNav(item.category)}
-                >
-                  {item.label}
-                </Link>
+                {item.kind === 'section' ? (
+                  <button
+                    type="button"
+                    className="nav-link link-hover nav-link-btn"
+                    onFocus={() => setActiveNav(SUBMENU[item.label] ? item.label : null)}
+                    onClick={() => goToSection(item.sectionId)}
+                  >
+                    {item.label}
+                  </button>
+                ) : (
+                  <Link
+                    to={item.to}
+                    className="nav-link link-hover"
+                    onFocus={() => setActiveNav(SUBMENU[item.label] ? item.label : null)}
+                    onClick={() => setActiveNav(null)}
+                  >
+                    {item.label}
+                  </Link>
+                )}
               </li>
             ))}
-            <li className="nav-item" onMouseEnter={() => setActiveNav(null)}>
-              <button
-                type="button"
-                className="nav-link link-hover nav-link-btn"
-                onFocus={() => setActiveNav(null)}
-                onClick={goAbout}
-              >
-                ABOUT
-              </button>
-            </li>
           </ul>
         </nav>
 
@@ -178,30 +210,29 @@ export default function Header() {
           <Link to="/cart" className="icon-btn cart-btn link-hover" aria-label="장바구니">
             <span className="icon-btn-icon">
               <BagIcon />
-              {totalCount > 0 && <span className="cart-badge">{totalCount}</span>}
             </span>
-            <span className="icon-btn-label">BAG</span>
+            <span className="icon-btn-label">BAG({totalCount})</span>
           </Link>
         </div>
       </div>
 
       <div className={`nav-submenu-bar ${activeNav ? 'open' : ''}`}>
         <div className="nav-submenu-inner">
-          {NAV.map((item) => (
-            <div
-              key={item.label}
-              className={`nav-submenu-panel ${activeNav === item.category ? 'visible' : ''}`}
-            >
-              {productsByCategory[item.category].map((p) => (
-                <Link key={p.slug} to={`/product/${p.slug}`} className="nav-submenu-link link-hover">
-                  <img src={assetUrl(p.image)} alt={p.name} />
-                  <span>{p.name}</span>
-                </Link>
+          {Object.entries(SUBMENU).map(([key, items]) => (
+            <ul key={key} className={`nav-submenu-list ${activeNav === key ? 'visible' : ''}`}>
+              {items.map((it) => (
+                <li key={it.label}>
+                  <Link to={it.to} className="nav-submenu-text-link link-hover" onClick={() => setActiveNav(null)}>
+                    {it.label}
+                  </Link>
+                </li>
               ))}
-            </div>
+            </ul>
           ))}
         </div>
       </div>
+
+      <div className={`nav-dim-overlay ${activeNav ? 'visible' : ''}`} aria-hidden="true" />
 
       {searchOpen && <SearchOverlay onClose={() => setSearchOpen(false)} />}
     </header>
