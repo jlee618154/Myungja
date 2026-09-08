@@ -1,4 +1,4 @@
-import { useEffect, useState, type CSSProperties } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { assetUrl } from '../lib/format';
@@ -39,10 +39,7 @@ export default function MdPick() {
     <div className="md-pick-page">
       <section
         className="md-pick-hero"
-        style={{
-          backgroundImage: `url(${assetUrl(content.heroImage)})`,
-          '--mobile-hero-aspect': content.mobileHeroAspectRatio ?? 2.6,
-        } as CSSProperties}
+        style={{ backgroundImage: `url(${assetUrl(content.heroImage)})` }}
         aria-label={`${content.eyebrow} — ${content.title}`}
       >
         {/* 타이틀/리드 문구는 배너 사진 자체에 이미 디자인되어 있으므로, 이 블록은
